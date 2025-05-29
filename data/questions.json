@@ -1,0 +1,964 @@
+{
+    "questions": [
+      {
+        "id": 1,
+        "english": "Worry about things.",
+        "japanese": "心配性だ",
+        "domain": "Neuroticism",
+        "facet": "Anxiety",
+        "keying": "positive"
+      },
+      {
+        "id": 2,
+        "english": "Make friends easily.",
+        "japanese": "友達を作るのは簡単だ",
+        "domain": "Extraversion",
+        "facet": "Friendliness",
+        "keying": "positive"
+      },
+      {
+        "id": 3,
+        "english": "Have a vivid imagination.",
+        "japanese": "想像力が豊かだ",
+        "domain": "Openness",
+        "facet": "Imagination",
+        "keying": "positive"
+      },
+      {
+        "id": 4,
+        "english": "Trust others.",
+        "japanese": "他人を信頼する",
+        "domain": "Agreeableness",
+        "facet": "Trust",
+        "keying": "positive"
+      },
+      {
+        "id": 5,
+        "english": "Complete tasks successfully.",
+        "japanese": "やることをきちんとやり遂げる",
+        "domain": "Conscientiousness",
+        "facet": "Self-Efficacy",
+        "keying": "positive"
+      },
+      {
+        "id": 6,
+        "english": "Get angry easily.",
+        "japanese": "怒りっぽい",
+        "domain": "Neuroticism",
+        "facet": "Anger",
+        "keying": "positive"
+      },
+      {
+        "id": 7,
+        "english": "Love large parties.",
+        "japanese": "大きなパーティーが好きだ",
+        "domain": "Extraversion",
+        "facet": "Gregariousness",
+        "keying": "positive"
+      },
+      {
+        "id": 8,
+        "english": "Believe in the importance of art.",
+        "japanese": "芸術は重要だと思う",
+        "domain": "Openness",
+        "facet": "Artistic Interests",
+        "keying": "positive"
+      },
+      {
+        "id": 9,
+        "english": "Use others for my own ends.",
+        "japanese": "自分の目的のために他人を利用する",
+        "domain": "Agreeableness",
+        "facet": "Morality",
+        "keying": "negative"
+      },
+      {
+        "id": 10,
+        "english": "Like to tidy up.",
+        "japanese": "片付けるのが好きだ",
+        "domain": "Conscientiousness",
+        "facet": "Orderliness",
+        "keying": "positive"
+      },
+      {
+        "id": 11,
+        "english": "Fear for the worst.",
+        "japanese": "最悪の事態を恐れる",
+        "domain": "Neuroticism",
+        "facet": "Anxiety",
+        "keying": "positive"
+      },
+      {
+        "id": 12,
+        "english": "Feel comfortable around people.",
+        "japanese": "人といると居心地が良い",
+        "domain": "Extraversion",
+        "facet": "Friendliness",
+        "keying": "positive"
+      },
+      {
+        "id": 13,
+        "english": "Experience my emotions intensely.",
+        "japanese": "感情の起伏が激しい",
+        "domain": "Openness",
+        "facet": "Emotionality",
+        "keying": "positive"
+      },
+      {
+        "id": 14,
+        "english": "Believe that others have good intentions.",
+        "japanese": "他人は善意を持っていると思う",
+        "domain": "Agreeableness",
+        "facet": "Trust",
+        "keying": "positive"
+      },
+      {
+        "id": 15,
+        "english": "Excel in what I do.",
+        "japanese": "何をやってもうまくやる",
+        "domain": "Conscientiousness",
+        "facet": "Self-Efficacy",
+        "keying": "positive"
+      },
+      {
+        "id": 16,
+        "english": "Get irritated easily.",
+        "japanese": "いらいらしやすい",
+        "domain": "Neuroticism",
+        "facet": "Anger",
+        "keying": "positive"
+      },
+      {
+        "id": 17,
+        "english": "Talk to a lot of different people at parties.",
+        "japanese": "パーティーで多くの異なる人と話す",
+        "domain": "Extraversion",
+        "facet": "Gregariousness",
+        "keying": "positive"
+      },
+      {
+        "id": 18,
+        "english": "See beauty in things that others might not notice.",
+        "japanese": "他の人が気づかないような美しさを見つける",
+        "domain": "Openness",
+        "facet": "Artistic Interests",
+        "keying": "positive"
+      },
+      {
+        "id": 19,
+        "english": "Cheat to get ahead.",
+        "japanese": "自分の利益のためにずるをする",
+        "domain": "Agreeableness",
+        "facet": "Morality",
+        "keying": "negative"
+      },
+      {
+        "id": 20,
+        "english": "Often forget to put things back in their proper place.",
+        "japanese": "物を元の場所に戻すのをよく忘れる",
+        "domain": "Conscientiousness",
+        "facet": "Orderliness",
+        "keying": "negative"
+      },
+      {
+        "id": 21,
+        "english": "Am afraid of many things.",
+        "japanese": "怖がりだ",
+        "domain": "Neuroticism",
+        "facet": "Anxiety",
+        "keying": "positive"
+      },
+      {
+        "id": 22,
+        "english": "Avoid contacts with others.",
+        "japanese": "人との交流を避ける",
+        "domain": "Extraversion",
+        "facet": "Friendliness",
+        "keying": "negative"
+      },
+      {
+        "id": 23,
+        "english": "Enjoy wild flights of fantasy.",
+        "japanese": "大胆な空想を楽しむ",
+        "domain": "Openness",
+        "facet": "Imagination",
+        "keying": "positive"
+      },
+      {
+        "id": 24,
+        "english": "Trust what people say.",
+        "japanese": "人の言うことを信じる",
+        "domain": "Agreeableness",
+        "facet": "Trust",
+        "keying": "positive"
+      },
+      {
+        "id": 25,
+        "english": "Handle tasks smoothly.",
+        "japanese": "物事をスムーズに処理する",
+        "domain": "Conscientiousness",
+        "facet": "Self-Efficacy",
+        "keying": "positive"
+      },
+      {
+        "id": 26,
+        "english": "Lose my temper.",
+        "japanese": "かっとなる",
+        "domain": "Neuroticism",
+        "facet": "Anger",
+        "keying": "positive"
+      },
+      {
+        "id": 27,
+        "english": "Prefer to be alone.",
+        "japanese": "一人でいることを好む",
+        "domain": "Extraversion",
+        "facet": "Gregariousness",
+        "keying": "negative"
+      },
+      {
+        "id": 28,
+        "english": "Feel others' emotions.",
+        "japanese": "他人の感情を感じ取る",
+        "domain": "Openness",
+        "facet": "Emotionality",
+        "keying": "positive"
+      },
+      {
+        "id": 29,
+        "english": "Distrust people.",
+        "japanese": "人を信用しない",
+        "domain": "Agreeableness",
+        "facet": "Trust",
+        "keying": "negative"
+      },
+      {
+        "id": 30,
+        "english": "Know how to get things done.",
+        "japanese": "物事をうまくやるコツを知っている",
+        "domain": "Conscientiousness",
+        "facet": "Self-Efficacy",
+        "keying": "positive"
+      },
+      {
+        "id": 31,
+        "english": "Get stressed out easily.",
+        "japanese": "ストレスを感じやすい",
+        "domain": "Neuroticism",
+        "facet": "Anxiety",
+        "keying": "positive"
+      },
+      {
+        "id": 32,
+        "english": "Keep others at a distance.",
+        "japanese": "他人と距離を置いて付き合う",
+        "domain": "Extraversion",
+        "facet": "Friendliness",
+        "keying": "negative"
+      },
+      {
+        "id": 33,
+        "english": "Love to daydream.",
+        "japanese": "空想にふけるのが好きだ",
+        "domain": "Openness",
+        "facet": "Imagination",
+        "keying": "positive"
+      },
+      {
+        "id": 34,
+        "english": "Take advantage of others.",
+        "japanese": "他人を利用する",
+        "domain": "Agreeableness",
+        "facet": "Morality",
+        "keying": "negative"
+      },
+      {
+        "id": 35,
+        "english": "Leave a mess in my room.",
+        "japanese": "部屋を散らかしたままにする",
+        "domain": "Conscientiousness",
+        "facet": "Orderliness",
+        "keying": "negative"
+      },
+      {
+        "id": 36,
+        "english": "Am not easily annoyed.",
+        "japanese": "あまりいらいらしない",
+        "domain": "Neuroticism",
+        "facet": "Anger",
+        "keying": "negative"
+      },
+      {
+        "id": 37,
+        "english": "Avoid crowds.",
+        "japanese": "群衆を避ける",
+        "domain": "Extraversion",
+        "facet": "Gregariousness",
+        "keying": "negative"
+      },
+      {
+        "id": 38,
+        "english": "Like to get lost in thought.",
+        "japanese": "考え事をするのが好きだ",
+        "domain": "Openness",
+        "facet": "Imagination",
+        "keying": "positive"
+      },
+      {
+        "id": 39,
+        "english": "Obstruct others' plans.",
+        "japanese": "他人の計画を妨害する",
+        "domain": "Agreeableness",
+        "facet": "Morality",
+        "keying": "negative"
+      },
+      {
+        "id": 40,
+        "english": "Leave my belongings around.",
+        "japanese": "ものを出しっぱなしにする",
+        "domain": "Conscientiousness",
+        "facet": "Orderliness",
+        "keying": "negative"
+      },
+      {
+        "id": 41,
+        "english": "Often feel blue.",
+        "japanese": "よく憂鬱になる",
+        "domain": "Neuroticism",
+        "facet": "Depression",
+        "keying": "positive"
+      },
+      {
+        "id": 42,
+        "english": "Take charge.",
+        "japanese": "率先して仕切る",
+        "domain": "Extraversion",
+        "facet": "Assertiveness",
+        "keying": "positive"
+      },
+      {
+        "id": 43,
+        "english": "Prefer variety to routine.",
+        "japanese": "決まりきったことより変化を好む",
+        "domain": "Openness",
+        "facet": "Adventurousness",
+        "keying": "positive"
+      },
+      {
+        "id": 44,
+        "english": "Am concerned about others.",
+        "japanese": "他人のことを気にかける",
+        "domain": "Agreeableness",
+        "facet": "Altruism",
+        "keying": "positive"
+      },
+      {
+        "id": 45,
+        "english": "Keep my promises.",
+        "japanese": "約束を守る",
+        "domain": "Conscientiousness",
+        "facet": "Dutifulness",
+        "keying": "positive"
+      },
+      {
+        "id": 46,
+        "english": "Dislike myself.",
+        "japanese": "自分が嫌いだ",
+        "domain": "Neuroticism",
+        "facet": "Depression",
+        "keying": "positive"
+      },
+      {
+        "id": 47,
+        "english": "Try to lead others.",
+        "japanese": "人を引っ張っていこうとする",
+        "domain": "Extraversion",
+        "facet": "Assertiveness",
+        "keying": "positive"
+      },
+      {
+        "id": 48,
+        "english": "Love to read challenging material.",
+        "japanese": "難しい本を読むのが好きだ",
+        "domain": "Openness",
+        "facet": "Intellect",
+        "keying": "positive"
+      },
+      {
+        "id": 49,
+        "english": "Love to help others.",
+        "japanese": "他人を助けるのが好きだ",
+        "domain": "Agreeableness",
+        "facet": "Altruism",
+        "keying": "positive"
+      },
+      {
+        "id": 50,
+        "english": "Tell the truth.",
+        "japanese": "嘘をつかず正直に言う",
+        "domain": "Conscientiousness",
+        "facet": "Dutifulness",
+        "keying": "positive"
+      },
+      {
+        "id": 51,
+        "english": "Am often down in the dumps.",
+        "japanese": "よく落ち込む",
+        "domain": "Neuroticism",
+        "facet": "Depression",
+        "keying": "positive"
+      },
+      {
+        "id": 52,
+        "english": "Take control of things.",
+        "japanese": "主導権を握ろうとする",
+        "domain": "Extraversion",
+        "facet": "Assertiveness",
+        "keying": "positive"
+      },
+      {
+        "id": 53,
+        "english": "Tend to vote for liberal political candidates.",
+        "japanese": "リベラルな候補者に投票する傾向がある",
+        "domain": "Openness",
+        "facet": "Liberalism",
+        "keying": "positive"
+      },
+      {
+        "id": 54,
+        "english": "Am indifferent to the feelings of others.",
+        "japanese": "他人の感情に無関心だ",
+        "domain": "Agreeableness",
+        "facet": "Altruism",
+        "keying": "negative"
+      },
+      {
+        "id": 55,
+        "english": "Break rules.",
+        "japanese": "ルールを破る",
+        "domain": "Conscientiousness",
+        "facet": "Dutifulness",
+        "keying": "negative"
+      },
+      {
+        "id": 56,
+        "english": "Feel comfortable with myself.",
+        "japanese": "自分自身に満足している",
+        "domain": "Neuroticism",
+        "facet": "Depression",
+        "keying": "negative"
+      },
+      {
+        "id": 57,
+        "english": "Wait for others to lead the way.",
+        "japanese": "自分で決めるより他人に従う方だ",
+        "domain": "Extraversion",
+        "facet": "Assertiveness",
+        "keying": "negative"
+      },
+      {
+        "id": 58,
+        "english": "Believe that there is no absolute right or wrong.",
+        "japanese": "絶対的な正しさや間違いはないと信じている",
+        "domain": "Openness",
+        "facet": "Liberalism",
+        "keying": "positive"
+      },
+      {
+        "id": 59,
+        "english": "Take no time for others.",
+        "japanese": "他人のために時間を割かない",
+        "domain": "Agreeableness",
+        "facet": "Altruism",
+        "keying": "negative"
+      },
+      {
+        "id": 60,
+        "english": "Break my promises.",
+        "japanese": "約束を破る",
+        "domain": "Conscientiousness",
+        "facet": "Dutifulness",
+        "keying": "negative"
+      },
+      {
+        "id": 61,
+        "english": "Find it difficult to approach others.",
+        "japanese": "人に声をかけるのが苦手だ",
+        "domain": "Neuroticism",
+        "facet": "Self-Consciousness",
+        "keying": "positive"
+      },
+      {
+        "id": 62,
+        "english": "Am always busy.",
+        "japanese": "いつも忙しくしている",
+        "domain": "Extraversion",
+        "facet": "Activity Level",
+        "keying": "positive"
+      },
+      {
+        "id": 63,
+        "english": "Do not like poetry.",
+        "japanese": "詩が好きではない",
+        "domain": "Openness",
+        "facet": "Artistic Interests",
+        "keying": "negative"
+      },
+      {
+        "id": 64,
+        "english": "Love a good fight.",
+        "japanese": "議論や対立を楽しむ",
+        "domain": "Agreeableness",
+        "facet": "Cooperation",
+        "keying": "negative"
+      },
+      {
+        "id": 65,
+        "english": "Do more than what's expected of me.",
+        "japanese": "期待される以上のことをする",
+        "domain": "Conscientiousness",
+        "facet": "Achievement-Striving",
+        "keying": "positive"
+      },
+      {
+        "id": 66,
+        "english": "Am afraid to draw attention to myself.",
+        "japanese": "自分が注目されるのが苦手だ",
+        "domain": "Neuroticism",
+        "facet": "Self-Consciousness",
+        "keying": "positive"
+      },
+      {
+        "id": 67,
+        "english": "Am always on the go.",
+        "japanese": "いつも活動的だ",
+        "domain": "Extraversion",
+        "facet": "Activity Level",
+        "keying": "positive"
+      },
+      {
+        "id": 68,
+        "english": "Prefer to stick with things that I know.",
+        "japanese": "新しいことより慣れたことを選ぶ",
+        "domain": "Openness",
+        "facet": "Adventurousness",
+        "keying": "negative"
+      },
+      {
+        "id": 69,
+        "english": "Yell at people.",
+        "japanese": "人を怒鳴る",
+        "domain": "Agreeableness",
+        "facet": "Cooperation",
+        "keying": "negative"
+      },
+      {
+        "id": 70,
+        "english": "Work hard.",
+        "japanese": "一生懸命働く",
+        "domain": "Conscientiousness",
+        "facet": "Achievement-Striving",
+        "keying": "positive"
+      },
+      {
+        "id": 71,
+        "english": "Only feel comfortable with friends.",
+        "japanese": "友達といる時だけ居心地が良い",
+        "domain": "Neuroticism",
+        "facet": "Self-Consciousness",
+        "keying": "positive"
+      },
+      {
+        "id": 72,
+        "english": "Do a lot in my spare time.",
+        "japanese": "自由な時間にたくさんのことをする",
+        "domain": "Extraversion",
+        "facet": "Activity Level",
+        "keying": "positive"
+      },
+      {
+        "id": 73,
+        "english": "Avoid philosophical discussions.",
+        "japanese": "哲学的な議論を避ける",
+        "domain": "Openness",
+        "facet": "Intellect",
+        "keying": "negative"
+      },
+      {
+        "id": 74,
+        "english": "Insult people.",
+        "japanese": "人を侮辱する",
+        "domain": "Agreeableness",
+        "facet": "Cooperation",
+        "keying": "negative"
+      },
+      {
+        "id": 75,
+        "english": "Put little time and effort into my work.",
+        "japanese": "仕事にあまり時間と労力をかけない",
+        "domain": "Conscientiousness",
+        "facet": "Achievement-Striving",
+        "keying": "negative"
+      },
+      {
+        "id": 76,
+        "english": "Am not bothered by difficult social situations.",
+        "japanese": "人間関係が複雑でも気にならない",
+        "domain": "Neuroticism",
+        "facet": "Self-Consciousness",
+        "keying": "negative"
+      },
+      {
+        "id": 77,
+        "english": "Like to take it easy.",
+        "japanese": "のんびりするのが好きだ",
+        "domain": "Extraversion",
+        "facet": "Activity Level",
+        "keying": "negative"
+      },
+      {
+        "id": 78,
+        "english": "Dislike changes.",
+        "japanese": "変化が嫌いだ",
+        "domain": "Openness",
+        "facet": "Adventurousness",
+        "keying": "negative"
+      },
+      {
+        "id": 79,
+        "english": "Get back at others.",
+        "japanese": "他人に仕返しをする",
+        "domain": "Agreeableness",
+        "facet": "Cooperation",
+        "keying": "negative"
+      },
+      {
+        "id": 80,
+        "english": "Do just enough work to get by.",
+        "japanese": "できる範囲の仕事しかしない",
+        "domain": "Conscientiousness",
+        "facet": "Achievement-Striving",
+        "keying": "negative"
+      },
+      {
+        "id": 81,
+        "english": "Go on binges.",
+        "japanese": "ついやり過ぎてしまう",
+        "domain": "Neuroticism",
+        "facet": "Immoderation",
+        "keying": "positive"
+      },
+      {
+        "id": 82,
+        "english": "Love excitement.",
+        "japanese": "刺激を求める",
+        "domain": "Extraversion",
+        "facet": "Excitement-Seeking",
+        "keying": "positive"
+      },
+      {
+        "id": 83,
+        "english": "Have difficulty understanding abstract ideas.",
+        "japanese": "抽象的な考えを理解するのに苦労する",
+        "domain": "Openness",
+        "facet": "Intellect",
+        "keying": "negative"
+      },
+      {
+        "id": 84,
+        "english": "Believe that I am better than others.",
+        "japanese": "自分は他人より優れていると思う",
+        "domain": "Agreeableness",
+        "facet": "Modesty",
+        "keying": "negative"
+      },
+      {
+        "id": 85,
+        "english": "Am always prepared.",
+        "japanese": "いつでも準備万端だ",
+        "domain": "Conscientiousness",
+        "facet": "Self-Discipline",
+        "keying": "positive"
+      },
+      {
+        "id": 86,
+        "english": "Rarely overindulge.",
+        "japanese": "めったに欲に流されない",
+        "domain": "Neuroticism",
+        "facet": "Immoderation",
+        "keying": "negative"
+      },
+      {
+        "id": 87,
+        "english": "Seek adventure.",
+        "japanese": "刺激的な体験を求める",
+        "domain": "Extraversion",
+        "facet": "Excitement-Seeking",
+        "keying": "positive"
+      },
+      {
+        "id": 88,
+        "english": "Am not interested in theoretical discussions.",
+        "japanese": "抽象的な話題には興味がない",
+        "domain": "Openness",
+        "facet": "Intellect",
+        "keying": "negative"
+      },
+      {
+        "id": 89,
+        "english": "Think highly of myself.",
+        "japanese": "自分を高く評価している",
+        "domain": "Agreeableness",
+        "facet": "Modesty",
+        "keying": "negative"
+      },
+      {
+        "id": 90,
+        "english": "Carry out my plans.",
+        "japanese": "計画をちゃんと実行する",
+        "domain": "Conscientiousness",
+        "facet": "Self-Discipline",
+        "keying": "positive"
+      },
+      {
+        "id": 91,
+        "english": "Easily resist temptations.",
+        "japanese": "誘惑に簡単に抵抗できる",
+        "domain": "Neuroticism",
+        "facet": "Immoderation",
+        "keying": "negative"
+      },
+      {
+        "id": 92,
+        "english": "Enjoy being reckless.",
+        "japanese": "結果を考えずに行動するのが楽しい",
+        "domain": "Extraversion",
+        "facet": "Excitement-Seeking",
+        "keying": "positive"
+      },
+      {
+        "id": 93,
+        "english": "Tend to vote for conservative political candidates.",
+        "japanese": "保守的な候補者に投票する傾向がある",
+        "domain": "Openness",
+        "facet": "Liberalism",
+        "keying": "negative"
+      },
+      {
+        "id": 94,
+        "english": "Have a high opinion of myself.",
+        "japanese": "自分を高く評価している",
+        "domain": "Agreeableness",
+        "facet": "Modesty",
+        "keying": "negative"
+      },
+      {
+        "id": 95,
+        "english": "Waste my time.",
+        "japanese": "時間を無駄にする",
+        "domain": "Conscientiousness",
+        "facet": "Self-Discipline",
+        "keying": "negative"
+      },
+      {
+        "id": 96,
+        "english": "Am able to control my cravings.",
+        "japanese": "欲をコントロールできる",
+        "domain": "Neuroticism",
+        "facet": "Immoderation",
+        "keying": "negative"
+      },
+      {
+        "id": 97,
+        "english": "Act wild and crazy.",
+        "japanese": "大胆に行動する",
+        "domain": "Extraversion",
+        "facet": "Excitement-Seeking",
+        "keying": "positive"
+      },
+      {
+        "id": 98,
+        "english": "Believe that we should be tough on crime.",
+        "japanese": "犯罪に対して厳しく対処すべきだと思う",
+        "domain": "Openness",
+        "facet": "Liberalism",
+        "keying": "negative"
+      },
+      {
+        "id": 99,
+        "english": "Boast about my virtues.",
+        "japanese": "自分の立派さをアピールする",
+        "domain": "Agreeableness",
+        "facet": "Modesty",
+        "keying": "negative"
+      },
+      {
+        "id": 100,
+        "english": "Have difficulty starting tasks.",
+        "japanese": "作業を始めるのが苦手だ",
+        "domain": "Conscientiousness",
+        "facet": "Self-Discipline",
+        "keying": "negative"
+      },
+      {
+        "id": 101,
+        "english": "Panic easily.",
+        "japanese": "パニックになりやすい",
+        "domain": "Neuroticism",
+        "facet": "Vulnerability",
+        "keying": "positive"
+      },
+      {
+        "id": 102,
+        "english": "Radiate joy.",
+        "japanese": "喜びを態度や表情に出す",
+        "domain": "Extraversion",
+        "facet": "Cheerfulness",
+        "keying": "positive"
+      },
+      {
+        "id": 103,
+        "english": "Rarely notice my emotional reactions.",
+        "japanese": "自分の感情にあまり気づかない",
+        "domain": "Openness",
+        "facet": "Emotionality",
+        "keying": "negative"
+      },
+      {
+        "id": 104,
+        "english": "Sympathize with the homeless.",
+        "japanese": "ホームレスの人に同情する",
+        "domain": "Agreeableness",
+        "facet": "Sympathy",
+        "keying": "positive"
+      },
+      {
+        "id": 105,
+        "english": "Jump into things without thinking.",
+        "japanese": "よく考えずに物事に飛び込む",
+        "domain": "Conscientiousness",
+        "facet": "Cautiousness",
+        "keying": "negative"
+      },
+      {
+        "id": 106,
+        "english": "Become overwhelmed by events.",
+        "japanese": "いろいろ起こるとパニックになる",
+        "domain": "Neuroticism",
+        "facet": "Vulnerability",
+        "keying": "positive"
+      },
+      {
+        "id": 107,
+        "english": "Have a lot of fun.",
+        "japanese": "何でも楽しめる方だ",
+        "domain": "Extraversion",
+        "facet": "Cheerfulness",
+        "keying": "positive"
+      },
+      {
+        "id": 108,
+        "english": "Am attached to conventional ways.",
+        "japanese": "従来のやり方に執着する",
+        "domain": "Openness",
+        "facet": "Adventurousness",
+        "keying": "negative"
+      },
+      {
+        "id": 109,
+        "english": "Feel sympathy for those who are worse off than myself.",
+        "japanese": "自分より恵まれない人に同情する",
+        "domain": "Agreeableness",
+        "facet": "Sympathy",
+        "keying": "positive"
+      },
+      {
+        "id": 110,
+        "english": "Make rash decisions.",
+        "japanese": "衝動的に決断する",
+        "domain": "Conscientiousness",
+        "facet": "Cautiousness",
+        "keying": "negative"
+      },
+      {
+        "id": 111,
+        "english": "Feel that I'm unable to deal with things.",
+        "japanese": "困難に対応する自信がない",
+        "domain": "Neuroticism",
+        "facet": "Vulnerability",
+        "keying": "positive"
+      },
+      {
+        "id": 112,
+        "english": "Love life.",
+        "japanese": "人生を楽しんでいる",
+        "domain": "Extraversion",
+        "facet": "Cheerfulness",
+        "keying": "positive"
+      },
+      {
+        "id": 113,
+        "english": "Don't understand people who get emotional.",
+        "japanese": "感情的になる人の気持ちがわからない",
+        "domain": "Openness",
+        "facet": "Emotionality",
+        "keying": "negative"
+      },
+      {
+        "id": 114,
+        "english": "Am not interested in other people's problems.",
+        "japanese": "他人の問題には興味がない",
+        "domain": "Agreeableness",
+        "facet": "Sympathy",
+        "keying": "negative"
+      },
+      {
+        "id": 115,
+        "english": "Rush into things.",
+        "japanese": "よく考えずにすぐ始めてしまう",
+        "domain": "Conscientiousness",
+        "facet": "Cautiousness",
+        "keying": "negative"
+      },
+      {
+        "id": 116,
+        "english": "Remain calm under pressure.",
+        "japanese": "プレッシャーの中でも冷静さを保つ",
+        "domain": "Neuroticism",
+        "facet": "Vulnerability",
+        "keying": "negative"
+      },
+      {
+        "id": 117,
+        "english": "Look at the bright side of life.",
+        "japanese": "人生を前向きに捉えている",
+        "domain": "Extraversion",
+        "facet": "Cheerfulness",
+        "keying": "positive"
+      },
+      {
+        "id": 118,
+        "english": "Do not enjoy going to art museums.",
+        "japanese": "美術館に行くのは楽しくない",
+        "domain": "Openness",
+        "facet": "Artistic Interests",
+        "keying": "negative"
+      },
+      {
+        "id": 119,
+        "english": "Try not to think about the needy.",
+        "japanese": "困っている人のことを考えないようにしている",
+        "domain": "Agreeableness",
+        "facet": "Sympathy",
+        "keying": "negative"
+      },
+      {
+        "id": 120,
+        "english": "Act without thinking.",
+        "japanese": "よく考えずに行動する",
+        "domain": "Conscientiousness",
+        "facet": "Cautiousness",
+        "keying": "negative"
+      }
+    ]
+  }

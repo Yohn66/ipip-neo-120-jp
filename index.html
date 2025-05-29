@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPIP-NEO-120 性格テスト</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .description {
+            font-size: 18px;
+            color: #34495e;
+            margin-bottom: 30px;
+        }
+        .features {
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        .features li {
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+        .start-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px 10px;
+        }
+        .start-button:hover {
+            background-color: #2980b9;
+        }
+        .test-info {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        .debug-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            text-align: left;
+        }
+        .debug-title {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        #debug-output {
+            background-color: white;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Big Five 性格分析</h1>
+        <div class="description">
+            国際標準の120問テスト
+        </div>
+        
+        <div class="features">
+            <h3>あなたの性格を5つの領域で詳細分析</h3>
+            <ul>
+                <li>32万人の研究データに基づく標準化された分析</li>
+                <li>あなたの特性が全体の何%に位置するかがわかる</li>
+                <li>30の側面で深く自分を理解</li>
+            </ul>
+        </div>
+
+        <button class="start-button" onclick="startTest()">テスト開始</button>
+        <button class="start-button" onclick="testDataLoad()">データ読み込みテスト</button>
+        <button class="start-button" onclick="testOneQuestion()">1問表示テスト</button>
+        
+        <div class="test-info">
+            所要時間：約10-15分｜120問
+        </div>
+
+        <!-- デバッグ用セクション -->
+        <div class="debug-section">
+            <div class="debug-title">開発用デバッグ情報</div>
+            <div id="debug-output">ここにデバッグ情報が表示されます</div>
+        </div>
+
+        <!-- テスト用の質問表示エリア -->
+        <div id="question-area" style="display: none; margin-top: 30px; padding: 20px; border: 2px solid #3498db; border-radius: 10px;">
+            <div id="question-progress" style="color: #7f8c8d; margin-bottom: 10px;"></div>
+            <div id="question-text" style="font-size: 18px; font-weight: bold; margin-bottom: 15px;"></div>
+            <div id="question-japanese" style="font-size: 16px; color: #2c3e50; margin-bottom: 20px;"></div>
+            
+            <div id="answer-options">
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="radio" name="answer" value="1" style="margin-right: 10px;">
+                    全く当てはまらない / Very Inaccurate
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="radio" name="answer" value="2" style="margin-right: 10px;">
+                    あまり当てはまらない / Moderately Inaccurate
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="radio" name="answer" value="3" style="margin-right: 10px;">
+                    どちらでもない / Neither Accurate nor Inaccurate
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="radio" name="answer" value="4" style="margin-right: 10px;">
+                    やや当てはまる / Moderately Accurate
+                </label>
+                <label style="display: block; margin: 10px 0; cursor: pointer;">
+                    <input type="radio" name="answer" value="5" style="margin-right: 10px;">
+                    非常に当てはまる / Very Accurate
+                </label>
+            </div>
+            
+            <button class="start-button" onclick="submitAnswer()" style="margin-top: 20px;">回答する</button>
+        </div>
+    </div>
+
+    <script>
+        // グローバル変数
+        let questionsData = null;
+        let normsData = null;
+        let currentQuestionIndex = 0;
+        let answers = [];
+
+        // デバッグ用関数
+        function debugLog(message) {
+            const debugOutput = document.getElementById('debug-output');
+            const timestamp = new Date().toLocaleTimeString();
+            debugOutput.textContent += `[${timestamp}] ${message}\n`;
+        }
+
+        // 初期化時のメッセージ
+        debugLog('ページが読み込まれました');
+
+        // テスト開始ボタン
+        function startTest() {
+            debugLog('テスト開始ボタンがクリックされました');
+            // 実際のテスト画面に遷移
+            window.location.href = 'test.html';
+        }
+
+        // データ読み込みテスト
+        async function testDataLoad() {
+            debugLog('データ読み込みテストを開始...');
+            
+            try {
+                // questions.jsonを読み込み
+                const questionsResponse = await fetch('./data/questions.json');
+                if (!questionsResponse.ok) {
+                    throw new Error(`questions.json読み込みエラー: ${questionsResponse.status}`);
+                }
+                questionsData = await questionsResponse.json();
+                debugLog(`✅ questions.json読み込み成功: ${questionsData.questions.length}問`);
+
+                // norms.jsonを読み込み
+                const normsResponse = await fetch('./data/norms.json');
+                if (!normsResponse.ok) {
+                    throw new Error(`norms.json読み込みエラー: ${normsResponse.status}`);
+                }
+                normsData = await normsResponse.json();
+                debugLog(`✅ norms.json読み込み成功: ${Object.keys(normsData.domains).length}領域, ${Object.keys(normsData.facets).length}側面`);
+
+                // サンプルデータ表示
+                debugLog(`サンプル質問: Q1 "${questionsData.questions[0].japanese}"`);
+                debugLog(`サンプル統計: 神経症傾向 平均=${normsData.domains.Neuroticism.mean}`);
+                
+            } catch (error) {
+                debugLog(`❌ エラー: ${error.message}`);
+            }
+        }
+
+        // 1問表示テスト
+        async function testOneQuestion() {
+            debugLog('1問表示テストを開始...');
+            
+            // データが読み込まれていない場合は先に読み込み
+            if (!questionsData) {
+                await testDataLoad();
+            }
+            
+            if (!questionsData) {
+                debugLog('❌ データの読み込みに失敗しました');
+                return;
+            }
+
+            // 質問エリアを表示
+            const questionArea = document.getElementById('question-area');
+            questionArea.style.display = 'block';
+            
+            // 最初の質問を表示
+            showQuestion(0);
+            debugLog('✅ 1問目を表示しました');
+        }
+
+        // 質問を表示する関数
+        function showQuestion(index) {
+            const question = questionsData.questions[index];
+            
+            // 進捗表示
+            document.getElementById('question-progress').textContent = `Q${index + 1} / 120`;
+            
+            // 質問文表示
+            document.getElementById('question-text').textContent = question.english;
+            document.getElementById('question-japanese').textContent = question.japanese;
+            
+            // 現在の質問インデックスを保存
+            currentQuestionIndex = index;
+            
+            // 前の回答をクリア
+            document.querySelectorAll('input[name="answer"]').forEach(radio => {
+                radio.checked = false;
+            });
+        }
+
+        // 回答を処理する関数
+        function submitAnswer() {
+            // 選択された回答を取得
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            
+            if (!selectedAnswer) {
+                alert('回答を選択してください');
+                return;
+            }
+            
+            const answerValue = parseInt(selectedAnswer.value);
+            const question = questionsData.questions[currentQuestionIndex];
+            
+            // 回答を保存
+            answers[currentQuestionIndex] = answerValue;
+            
+            debugLog(`Q${currentQuestionIndex + 1}の回答: ${answerValue} (${question.japanese})`);
+            debugLog(`回答内容: ${selectedAnswer.parentElement.textContent.trim()}`);
+            
+            // テスト用なので1問だけ
+            alert('回答が記録されました！1問表示テストは完了です。');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPIP-NEO-120 性格テスト - 実行中</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: white;
+            height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* ヘッダー部分をコンパクトに */
+        .header-section {
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+            margin-bottom: 15px;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .progress-info {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5px;
+        }
+        
+        /* プログレスバー */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #ecf0f1;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #3498db;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        /* 言語切り替えボタンをコンパクトに */
+        .language-button {
+            background: none;
+            border: 1px solid #bdc3c7;
+            padding: 4px 12px;
+            margin: 0 2px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.2s ease;
+        }
+        
+        .language-button.active {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        /* 質問エリア */
+        .question-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .question-english {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            line-height: 1.3;
+            margin-bottom: 25px;
+        }
+        
+        .question-japanese {
+            font-size: 18px;
+            color: #34495e;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+        
+        /* 言語切り替え */
+        .language-switch {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        /* 回答選択肢 - シンプルに */
+        .answers-container {
+            margin-bottom: 20px;
+        }
+        
+        .answer-option {
+            display: block;
+            margin: 3px 0;
+            padding: 12px 16px;
+            border: 1px solid #ecf0f1;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            background-color: #fafafa;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        
+        .answer-option:active {
+            transform: scale(0.98);
+        }
+        
+        .answer-option.selected {
+            border-color: #3498db;
+            background-color: #e3f2fd;
+            box-shadow: 0 1px 3px rgba(52, 152, 219, 0.3);
+        }
+        
+        .answer-option input[type="radio"] {
+            display: none; /* ラジオボタンを完全に非表示 */
+        }
+        
+        .answer-text {
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: 400;
+            text-align: center;
+        }
+        
+        .answer-text-en {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        /* ナビゲーションボタン */
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 0 10px 0;
+            border-top: 1px solid #ecf0f1;
+        }
+        
+        .nav-button {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .nav-button:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .nav-button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 600px) {
+            .test-container {
+                padding: 8px;
+            }
+            
+            .question-english {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+            
+            .answer-option {
+                padding: 14px 12px;
+                margin: 2px 0;
+            }
+            
+            .answer-text {
+                font-size: 15px;
+            }
+            
+            .header-section {
+                padding: 8px 0;
+                margin-bottom: 12px;
+            }
+            
+            .progress-info {
+                font-size: 15px;
+            }
+        }
+        
+        /* 超小画面対応 */
+        @media (max-width: 380px) {
+            .question-english {
+                font-size: 18px;
+            }
+            
+            .answer-text {
+                font-size: 14px;
+            }
+            
+            .answer-option {
+                padding: 12px 10px;
+            }
+        }
+        
+        /* デバッグエリア（開発用・スマホでは小さく） */
+        .debug-area {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .debug-title {
+            font-weight: bold;
+            color: #6c757d;
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        
+        .debug-content {
+            font-family: monospace;
+            font-size: 10px;
+            background-color: white;
+            padding: 8px;
+            border-radius: 3px;
+            white-space: pre-wrap;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <!-- ヘッダー部分 -->
+        <div class="header-section">
+            <div class="header-top">
+                <div class="progress-info" id="progress-text">Q1 / 120</div>
+                <div class="language-switch">
+                    <button class="language-button active" onclick="switchLanguage('jp')">日本語</button>
+                    <button class="language-button" onclick="switchLanguage('en')">English</button>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+        
+        <!-- メインコンテンツ -->
+        <div class="main-content">
+            <!-- 質問エリア -->
+            <div class="question-container">
+                <div class="question-english" id="question-english">Loading...</div>
+                <div class="question-japanese" id="question-japanese" style="display: none;">読み込み中...</div>
+            </div>
+            
+            <!-- 回答選択肢 -->
+            <div class="answers-container" id="answers-container">
+                <!-- JavaScriptで動的生成 -->
+            </div>
+        </div>
+        
+        <!-- ナビゲーション -->
+        <div class="navigation">
+            <button class="nav-button" id="prev-button" onclick="previousQuestion()" disabled>前の質問</button>
+        </div>
+        
+        <!-- デバッグエリア（開発用） -->
+        <div class="debug-area">
+            <div class="debug-title">デバッグ情報</div>
+            <div class="debug-content" id="debug-content">テスト開始前...</div>
+        </div>
+    </div>
+
+    <script>
+        // グローバル変数
+        let questionsData = null;
+        let normsData = null;
+        let currentQuestionIndex = 0;
+        let answers = [];
+        let currentLanguage = 'jp';
+        let autoAdvanceEnabled = true;
+
+        // 回答選択肢のテキスト
+        const answerOptions = {
+            jp: [
+                { value: 1, text: "全く当てはまらない", en: "Very Inaccurate" },
+                { value: 2, text: "あまり当てはまらない", en: "Moderately Inaccurate" },
+                { value: 3, text: "どちらでもない", en: "Neither Accurate nor Inaccurate" },
+                { value: 4, text: "やや当てはまる", en: "Moderately Accurate" },
+                { value: 5, text: "非常に当てはまる", en: "Very Accurate" }
+            ],
+            en: [
+                { value: 1, text: "Very Inaccurate", jp: "全く当てはまらない" },
+                { value: 2, text: "Moderately Inaccurate", jp: "あまり当てはまらない" },
+                { value: 3, text: "Neither Accurate nor Inaccurate", jp: "どちらでもない" },
+                { value: 4, text: "Moderately Accurate", jp: "やや当てはまる" },
+                { value: 5, text: "Very Accurate", jp: "非常に当てはまる" }
+            ]
+        };
+
+        // デバッグログ
+        function debugLog(message) {
+            const debugContent = document.getElementById('debug-content');
+            const timestamp = new Date().toLocaleTimeString();
+            debugContent.textContent += `[${timestamp}] ${message}\n`;
+        }
+
+        // 初期化
+        async function initializeTest() {
+            debugLog('テストを初期化中...');
+            
+            try {
+                // データを読み込み
+                await loadData();
+                
+                // 最初の質問を表示
+                showQuestion(0);
+                
+                debugLog('✅ テスト初期化完了');
+                
+            } catch (error) {
+                debugLog(`❌ 初期化エラー: ${error.message}`);
+                alert('データの読み込みに失敗しました。ページを再読み込みしてください。');
+            }
+        }
+
+        // データ読み込み
+        async function loadData() {
+            // questions.json
+            const questionsResponse = await fetch('./data/questions.json');
+            if (!questionsResponse.ok) {
+                throw new Error(`questions.json読み込みエラー: ${questionsResponse.status}`);
+            }
+            questionsData = await questionsResponse.json();
+            debugLog(`questions.json読み込み: ${questionsData.questions.length}問`);
+
+            // norms.json
+            const normsResponse = await fetch('./data/norms.json');
+            if (!normsResponse.ok) {
+                throw new Error(`norms.json読み込みエラー: ${normsResponse.status}`);
+            }
+            normsData = await normsResponse.json();
+            debugLog(`norms.json読み込み: ${Object.keys(normsData.domains).length}領域`);
+        }
+
+        // 質問表示
+        function showQuestion(index) {
+            const question = questionsData.questions[index];
+            currentQuestionIndex = index;
+            
+            // プログレス更新
+            updateProgress();
+            
+            // 質問文更新
+            updateQuestionText(question);
+            
+            // 回答選択肢更新
+            updateAnswerOptions();
+            
+            // ナビゲーションボタン更新
+            updateNavigation();
+            
+            debugLog(`Q${index + 1}を表示: ${question.japanese}`);
+        }
+
+        // プログレス更新
+        function updateProgress() {
+            const progressText = document.getElementById('progress-text');
+            const progressFill = document.getElementById('progress-fill');
+            
+            const progress = ((currentQuestionIndex + 1) / 120) * 100;
+            
+            // 残り問題数表示（最後20問）
+            if (currentQuestionIndex >= 100) {
+                const remaining = 120 - currentQuestionIndex;
+                progressText.textContent = `あと${remaining}問`;
+            } else {
+                progressText.textContent = `Q${currentQuestionIndex + 1} / 120`;
+            }
+            
+            progressFill.style.width = `${progress}%`;
+        }
+        
+        // 質問文更新
+        function updateQuestionText(question) {
+            const questionEnglish = document.getElementById('question-english');
+            const questionJapanese = document.getElementById('question-japanese');
+            
+            if (currentLanguage === 'jp') {
+                questionEnglish.textContent = question.japanese;
+                questionJapanese.style.display = 'none';
+            } else {
+                questionEnglish.textContent = question.english;
+                questionJapanese.style.display = 'none';
+            }
+        }
+
+        // 回答選択肢更新
+        function updateAnswerOptions() {
+            const container = document.getElementById('answers-container');
+            container.innerHTML = '';
+            
+            const options = answerOptions[currentLanguage];
+            
+            options.forEach(option => {
+                const label = document.createElement('label');
+                label.className = 'answer-option';
+                
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'answer';
+                radio.value = option.value;
+                
+                const textDiv = document.createElement('div');
+                textDiv.className = 'answer-text';
+                textDiv.textContent = option.text;
+                
+                label.appendChild(radio);
+                label.appendChild(textDiv);
+                container.appendChild(label);
+                
+                // クリックで選択（即座に反応）
+                label.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    radio.checked = true;
+                    handleAnswerSelect();
+                });
+            });
+            
+            // 既存の回答があれば復元
+            if (answers[currentQuestionIndex]) {
+                const radio = container.querySelector(`input[value="${answers[currentQuestionIndex]}"]`);
+                if (radio) {
+                    radio.checked = true;
+                    radio.closest('.answer-option').classList.add('selected');
+                }
+            }
+        }
+
+        // 回答選択時の処理
+        function handleAnswerSelect() {
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (!selectedOption) return;
+            
+            // 選択状態の視覚的更新
+            document.querySelectorAll('.answer-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            selectedOption.closest('.answer-option').classList.add('selected');
+            
+            // 回答を保存
+            const answerValue = parseInt(selectedOption.value);
+            answers[currentQuestionIndex] = answerValue;
+            
+            debugLog(`Q${currentQuestionIndex + 1}回答: ${answerValue}`);
+            
+            // 自動進行（ラグを最小限に）
+            if (autoAdvanceEnabled && currentQuestionIndex < 119) {
+                setTimeout(() => {
+                    nextQuestion();
+                }, 150); // 0.15秒後に自動進行
+            } else if (currentQuestionIndex === 119) {
+                // 最後の問題
+                setTimeout(() => {
+                    completeTest();
+                }, 150);
+            }
+            
+            updateNavigation();
+        }
+
+        // ナビゲーション更新
+        function updateNavigation() {
+            const prevButton = document.getElementById('prev-button');
+            
+            prevButton.disabled = currentQuestionIndex === 0;
+        }
+
+        // 前の質問
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                showQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        // 次の質問
+        function nextQuestion() {
+            if (currentQuestionIndex < 119 && answers[currentQuestionIndex]) {
+                showQuestion(currentQuestionIndex + 1);
+            }
+        }
+
+        // 言語切り替え
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // ボタンの状態更新
+            document.querySelectorAll('.language-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // 質問表示更新
+            if (questionsData) {
+                const question = questionsData.questions[currentQuestionIndex];
+                updateQuestionText(question);
+                updateAnswerOptions();
+            }
+            
+            debugLog(`言語切り替え: ${lang}`);
+        }
+
+        // テスト完了
+        function completeTest() {
+            debugLog('テスト完了！');
+            alert('お疲れさまでした！テストが完了しました。\n次は個人情報入力画面に移動します。');
+            
+            // 実際は個人情報入力画面に遷移
+            // location.href = 'personal-info.html';
+        }
+
+        // ページ読み込み時に初期化
+        window.addEventListener('load', initializeTest);
+    </script>
+</body>
+</html>
