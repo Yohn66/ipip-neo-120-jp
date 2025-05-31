@@ -1,218 +1,219 @@
 {
-    "domains": {
-      "Neuroticism": {
-        "mean": 11.10,
-        "sd": 2.66,
-        "japanese_name": "神経症傾向"
-      },
-      "Extraversion": {
-        "mean": 13.69,
-        "sd": 2.36,
-        "japanese_name": "外向性"
-      },
-      "Openness": {
-        "mean": 13.71,
-        "sd": 2.06,
-        "japanese_name": "経験への開放性"
-      },
-      "Agreeableness": {
-        "mean": 14.87,
-        "sd": 2.01,
-        "japanese_name": "協調性"
-      },
-      "Conscientiousness": {
-        "mean": 14.95,
-        "sd": 2.34,
-        "japanese_name": "責任自律性"
-      }
+  "domains": {
+    "Neuroticism": {
+      "mean": 66.60,
+      "sd": 6.52,
+      "japanese_name": "神経症傾向"
     },
-    "facets": {
-      "Anxiety": {
-        "mean": 12.07,
-        "sd": 3.77,
-        "japanese_name": "不安",
-        "domain": "Neuroticism"
-      },
-      "Anger": {
-        "mean": 11.51,
-        "sd": 4.11,
-        "japanese_name": "怒り",
-        "domain": "Neuroticism"
-      },
-      "Depression": {
-        "mean": 9.35,
-        "sd": 3.87,
-        "japanese_name": "憂鬱感",
-        "domain": "Neuroticism"
-      },
-      "Self-Consciousness": {
-        "mean": 11.69,
-        "sd": 3.64,
-        "japanese_name": "自意識",
-        "domain": "Neuroticism"
-      },
-      "Immoderation": {
-        "mean": 11.94,
-        "sd": 3.44,
-        "japanese_name": "衝動性",
-        "domain": "Neuroticism"
-      },
-      "Vulnerability": {
-        "mean": 10.07,
-        "sd": 3.63,
-        "japanese_name": "脆弱性",
-        "domain": "Neuroticism"
-      },
-      "Friendliness": {
-        "mean": 14.48,
-        "sd": 3.60,
-        "japanese_name": "親しみやすさ",
-        "domain": "Extraversion"
-      },
-      "Gregariousness": {
-        "mean": 12.36,
-        "sd": 4.02,
-        "japanese_name": "社交性",
-        "domain": "Extraversion"
-      },
-      "Assertiveness": {
-        "mean": 14.56,
-        "sd": 3.43,
-        "japanese_name": "積極性",
-        "domain": "Extraversion"
-      },
-      "Activity Level": {
-        "mean": 12.84,
-        "sd": 3.15,
-        "japanese_name": "活動性",
-        "domain": "Extraversion"
-      },
-      "Excitement-Seeking": {
-        "mean": 12.52,
-        "sd": 3.32,
-        "japanese_name": "刺激希求",
-        "domain": "Extraversion"
-      },
-      "Cheerfulness": {
-        "mean": 15.35,
-        "sd": 3.20,
-        "japanese_name": "陽気さ",
-        "domain": "Extraversion"
-      },
-      "Imagination": {
-        "mean": 14.60,
-        "sd": 3.41,
-        "japanese_name": "想像力",
-        "domain": "Openness"
-      },
-      "Artistic Interests": {
-        "mean": 14.67,
-        "sd": 3.58,
-        "japanese_name": "芸術的関心",
-        "domain": "Openness"
-      },
-      "Emotionality": {
-        "mean": 15.20,
-        "sd": 3.01,
-        "japanese_name": "感情性",
-        "domain": "Openness"
-      },
-      "Adventurousness": {
-        "mean": 12.28,
-        "sd": 3.26,
-        "japanese_name": "冒険性",
-        "domain": "Openness"
-      },
-      "Intellect": {
-        "mean": 14.50,
-        "sd": 3.55,
-        "japanese_name": "知的好奇心",
-        "domain": "Openness"
-      },
-      "Liberalism": {
-        "mean": 11.03,
-        "sd": 3.67,
-        "japanese_name": "リベラリズム",
-        "domain": "Openness"
-      },
-      "Trust": {
-        "mean": 13.43,
-        "sd": 3.54,
-        "japanese_name": "信頼性",
-        "domain": "Agreeableness"
-      },
-      "Morality": {
-        "mean": 16.63,
-        "sd": 2.88,
-        "japanese_name": "道徳性",
-        "domain": "Agreeableness"
-      },
-      "Altruism": {
-        "mean": 16.72,
-        "sd": 2.56,
-        "japanese_name": "利他性",
-        "domain": "Agreeableness"
-      },
-      "Cooperation": {
-        "mean": 15.10,
-        "sd": 3.49,
-        "japanese_name": "協力性",
-        "domain": "Agreeableness"
-      },
-      "Modesty": {
-        "mean": 12.34,
-        "sd": 3.35,
-        "japanese_name": "謙虚さ",
-        "domain": "Agreeableness"
-      },
-      "Sympathy": {
-        "mean": 15.03,
-        "sd": 3.10,
-        "japanese_name": "共感性",
-        "domain": "Agreeableness"
-      },
-      "Self-Efficacy": {
-        "mean": 16.32,
-        "sd": 2.40,
-        "japanese_name": "自己効力感",
-        "domain": "Conscientiousness"
-      },
-      "Orderliness": {
-        "mean": 13.23,
-        "sd": 4.31,
-        "japanese_name": "秩序性",
-        "domain": "Conscientiousness"
-      },
-      "Dutifulness": {
-        "mean": 16.32,
-        "sd": 2.57,
-        "japanese_name": "責任感",
-        "domain": "Conscientiousness"
-      },
-      "Achievement-Striving": {
-        "mean": 16.06,
-        "sd": 3.09,
-        "japanese_name": "達成努力",
-        "domain": "Conscientiousness"
-      },
-      "Self-Discipline": {
-        "mean": 14.07,
-        "sd": 3.16,
-        "japanese_name": "自制心",
-        "domain": "Conscientiousness"
-      },
-      "Cautiousness": {
-        "mean": 13.68,
-        "sd": 4.09,
-        "japanese_name": "慎重さ",
-        "domain": "Conscientiousness"
-      }
+    "Extraversion": {
+      "mean": 82.14,
+      "sd": 5.78,
+      "japanese_name": "外向性"
     },
-    "sample_info": {
-      "n": 320128,
-      "source": "Johnson (2014) IPIP-NEO-120 development study",
-      "population": "US adults",
-      "age_range": "19-69 years",
-      "mean_age": 28.1
+    "Openness": {
+      "mean": 82.26,
+      "sd": 5.05,
+      "japanese_name": "経験への開放性"
+    },
+    "Agreeableness": {
+      "mean": 89.22,
+      "sd": 4.93,
+      "japanese_name": "協調性"
+    },
+    "Conscientiousness": {
+      "mean": 89.70,
+      "sd": 5.74,
+      "japanese_name": "責任自律性"
     }
+  },
+  "facets": {
+    "Anxiety": {
+      "mean": 12.07,
+      "sd": 3.77,
+      "japanese_name": "不安",
+      "domain": "Neuroticism"
+    },
+    "Anger": {
+      "mean": 11.51,
+      "sd": 4.11,
+      "japanese_name": "怒り",
+      "domain": "Neuroticism"
+    },
+    "Depression": {
+      "mean": 9.35,
+      "sd": 3.87,
+      "japanese_name": "憂鬱感",
+      "domain": "Neuroticism"
+    },
+    "Self-Consciousness": {
+      "mean": 11.69,
+      "sd": 3.64,
+      "japanese_name": "自意識",
+      "domain": "Neuroticism"
+    },
+    "Immoderation": {
+      "mean": 11.94,
+      "sd": 3.44,
+      "japanese_name": "衝動性",
+      "domain": "Neuroticism"
+    },
+    "Vulnerability": {
+      "mean": 10.07,
+      "sd": 3.63,
+      "japanese_name": "脆弱性",
+      "domain": "Neuroticism"
+    },
+    "Friendliness": {
+      "mean": 14.48,
+      "sd": 3.60,
+      "japanese_name": "親しみやすさ",
+      "domain": "Extraversion"
+    },
+    "Gregariousness": {
+      "mean": 12.36,
+      "sd": 4.02,
+      "japanese_name": "社交性",
+      "domain": "Extraversion"
+    },
+    "Assertiveness": {
+      "mean": 14.56,
+      "sd": 3.43,
+      "japanese_name": "積極性",
+      "domain": "Extraversion"
+    },
+    "Activity Level": {
+      "mean": 12.84,
+      "sd": 3.15,
+      "japanese_name": "活動性",
+      "domain": "Extraversion"
+    },
+    "Excitement-Seeking": {
+      "mean": 12.52,
+      "sd": 3.32,
+      "japanese_name": "刺激希求",
+      "domain": "Extraversion"
+    },
+    "Cheerfulness": {
+      "mean": 15.35,
+      "sd": 3.20,
+      "japanese_name": "陽気さ",
+      "domain": "Extraversion"
+    },
+    "Imagination": {
+      "mean": 14.60,
+      "sd": 3.41,
+      "japanese_name": "想像力",
+      "domain": "Openness"
+    },
+    "Artistic Interests": {
+      "mean": 14.67,
+      "sd": 3.58,
+      "japanese_name": "芸術的関心",
+      "domain": "Openness"
+    },
+    "Emotionality": {
+      "mean": 15.20,
+      "sd": 3.01,
+      "japanese_name": "感情性",
+      "domain": "Openness"
+    },
+    "Adventurousness": {
+      "mean": 12.28,
+      "sd": 3.26,
+      "japanese_name": "冒険性",
+      "domain": "Openness"
+    },
+    "Intellect": {
+      "mean": 14.50,
+      "sd": 3.55,
+      "japanese_name": "知的好奇心",
+      "domain": "Openness"
+    },
+    "Liberalism": {
+      "mean": 11.03,
+      "sd": 3.67,
+      "japanese_name": "リベラリズム",
+      "domain": "Openness"
+    },
+    "Trust": {
+      "mean": 13.43,
+      "sd": 3.54,
+      "japanese_name": "信頼性",
+      "domain": "Agreeableness"
+    },
+    "Morality": {
+      "mean": 16.63,
+      "sd": 2.88,
+      "japanese_name": "道徳性",
+      "domain": "Agreeableness"
+    },
+    "Altruism": {
+      "mean": 16.72,
+      "sd": 2.56,
+      "japanese_name": "利他性",
+      "domain": "Agreeableness"
+    },
+    "Cooperation": {
+      "mean": 15.10,
+      "sd": 3.49,
+      "japanese_name": "協力性",
+      "domain": "Agreeableness"
+    },
+    "Modesty": {
+      "mean": 12.34,
+      "sd": 3.35,
+      "japanese_name": "謙虚さ",
+      "domain": "Agreeableness"
+    },
+    "Sympathy": {
+      "mean": 15.03,
+      "sd": 3.10,
+      "japanese_name": "共感性",
+      "domain": "Agreeableness"
+    },
+    "Self-Efficacy": {
+      "mean": 16.32,
+      "sd": 2.40,
+      "japanese_name": "自己効力感",
+      "domain": "Conscientiousness"
+    },
+    "Orderliness": {
+      "mean": 13.23,
+      "sd": 4.31,
+      "japanese_name": "秩序性",
+      "domain": "Conscientiousness"
+    },
+    "Dutifulness": {
+      "mean": 16.32,
+      "sd": 2.57,
+      "japanese_name": "責任感",
+      "domain": "Conscientiousness"
+    },
+    "Achievement-Striving": {
+      "mean": 16.06,
+      "sd": 3.09,
+      "japanese_name": "達成努力",
+      "domain": "Conscientiousness"
+    },
+    "Self-Discipline": {
+      "mean": 14.07,
+      "sd": 3.16,
+      "japanese_name": "自制心",
+      "domain": "Conscientiousness"
+    },
+    "Cautiousness": {
+      "mean": 13.68,
+      "sd": 4.09,
+      "japanese_name": "慎重さ",
+      "domain": "Conscientiousness"
+    }
+  },
+  "sample_info": {
+    "n": 320128,
+    "source": "Johnson (2014) IPIP-NEO-120 development study",
+    "population": "US adults",
+    "age_range": "19-69 years",
+    "mean_age": 28.1,
+    "note": "Domain means calculated as 6 × facet means, domain SDs estimated as facet SD × √6"
   }
+}

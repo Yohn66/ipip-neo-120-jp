@@ -346,6 +346,12 @@
             debugLog('テストを初期化中...');
             
             try {
+                // 回答配列を初期化（120問分）
+                answers = new Array(120);
+                
+                // 既存の回答があれば復元
+                loadExistingAnswers();
+                
                 // データを読み込み
                 await loadData();
                 
@@ -357,6 +363,32 @@
             } catch (error) {
                 debugLog(`❌ 初期化エラー: ${error.message}`);
                 alert('データの読み込みに失敗しました。ページを再読み込みしてください。');
+            }
+        }
+
+        // 既存の回答を読み込み
+        function loadExistingAnswers() {
+            try {
+                const savedAnswers = localStorage.getItem('ipip-neo-answers');
+                if (savedAnswers) {
+                    const parsed = JSON.parse(savedAnswers);
+                    if (Array.isArray(parsed) && parsed.length === 120) {
+                        answers = parsed;
+                        debugLog('既存の回答データを復元');
+                    }
+                }
+            } catch (error) {
+                debugLog(`回答復元エラー: ${error.message}`);
+            }
+        }
+
+        // 回答をlocalStorageに保存
+        function saveAnswers() {
+            try {
+                localStorage.setItem('ipip-neo-answers', JSON.stringify(answers));
+                debugLog('回答データを保存');
+            } catch (error) {
+                debugLog(`保存エラー: ${error.message}`);
             }
         }
 
@@ -451,14 +483,8 @@
                 textDiv.className = 'answer-text';
                 textDiv.textContent = option.text;
                 
-                // 二言語表示の場合のサブテキスト（現在は使用しない）
-                // const subTextDiv = document.createElement('div');
-                // subTextDiv.className = 'answer-text-en';
-                // subTextDiv.textContent = currentLanguage === 'jp' ? option.en : option.jp;
-                
                 label.appendChild(radio);
                 label.appendChild(textDiv);
-                // label.appendChild(subTextDiv);
                 container.appendChild(label);
                 
                 // クリックで選択（即座に反応）
@@ -493,6 +519,9 @@
             // 回答を保存
             const answerValue = parseInt(selectedOption.value);
             answers[currentQuestionIndex] = answerValue;
+            
+            // localStorage に即座に保存
+            saveAnswers();
             
             debugLog(`Q${currentQuestionIndex + 1}回答: ${answerValue}`);
             
@@ -555,10 +584,23 @@
         // テスト完了
         function completeTest() {
             debugLog('テスト完了！');
-            alert('お疲れさまでした！テストが完了しました。\n次は個人情報入力画面に移動します。');
             
-            // 実際は個人情報入力画面に遷移
-            // location.href = 'personal-info.html';
+            // 回答の完全性をチェック
+            const answeredCount = answers.filter(answer => answer !== undefined && answer !== null).length;
+            debugLog(`回答完了数: ${answeredCount}/120`);
+            
+            if (answeredCount < 120) {
+                alert('一部未回答の質問があります。すべての質問に回答してください。');
+                return;
+            }
+            
+            // 最終保存
+            saveAnswers();
+            debugLog('最終回答データを保存完了');
+            
+            // 個人情報入力画面に遷移
+            alert('お疲れさまでした！テストが完了しました。\n次は個人情報を入力してください。');
+            window.location.href = 'personal-info.html';
         }
 
         // ページ読み込み時に初期化

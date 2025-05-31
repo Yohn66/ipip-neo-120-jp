@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPIP-NEO-120 性格テスト - 詳細結果</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .header-emoji {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .header-title {
+            font-size: 24px;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .personal-info {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        /* 表示切り替えタブ */
+        .display-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #7f8c8d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+        
+        .tab-button:hover {
+            color: #2980b9;
+        }
+        
+        /* 領域セクション */
+        .domain-section {
+            margin-bottom: 40px;
+            border: 1px solid #ecf0f1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .domain-header {
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ecf0f1;
+            text-align: center;
+        }
+        
+        .domain-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+        }
+        
+        .domain-score {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            gap: 20px;
+        }
+        
+        .domain-score .score-value {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .domain-score .evaluation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .domain-score .evaluation-label {
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        
+        .domain-score .percentile {
+            font-size: 11px;
+            color: #5a6c7d;
+            margin-top: 2px;
+        }
+        
+        .domain-description {
+            font-size: 14px;
+            color: #5a6c7d;
+            line-height: 1.5;
+            margin: 0;
+            text-align: left;
+        }
+        
+        /* 側面リストテーブル化 */
+        .facets-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .facets-table thead th {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-bottom: 2px solid #dee2e6;
+            font-weight: bold;
+            color: #495057;
+            font-size: 14px;
+        }
+        
+        .facets-table thead th:first-child {
+            text-align: left;
+            width: 40%;
+        }
+        
+        .facets-table thead th:nth-child(2) {
+            text-align: center;
+            width: 20%;
+        }
+        
+        .facets-table thead th:last-child {
+            text-align: center;
+            width: 40%;
+        }
+        
+        .facet-item {
+            border-bottom: 1px solid #ecf0f1;
+            background-color: white;
+        }
+        
+        .facet-item:last-child {
+            border-bottom: none;
+        }
+        
+        .facet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .facet-header:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .facet-header:focus {
+            outline: none;
+            background-color: transparent;
+        }
+        
+        .facet-header:active {
+            background-color: #f8f9fa;
+        }
+        
+        .facet-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .facet-name-score {
+            display: flex;
+            align-items: center;
+            width: 40%;
+        }
+        
+        .expand-icon {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+            width: 12px;
+            display: inline-block;
+        }
+        
+        .expand-icon.expanded {
+            transform: rotate(90deg);
+        }
+        
+        .facet-name {
+            font-weight: 500;
+            color: #2c3e50;
+            flex: 1;
+            font-size: 14px; /* 基本画面と統一 */
+            white-space: nowrap; /* 改行を防ぐ */
+            overflow: hidden;
+            text-overflow: ellipsis; /* 長い場合は省略記号 */
+        }
+        
+        .facet-score {
+            font-weight: bold;
+            text-align: center;
+            width: 20%;
+            font-size: 16px;
+        }
+        
+        .facet-evaluation {
+            text-align: center;
+            width: 40%;
+        }
+        
+        .facet-evaluation .evaluation-label {
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+        
+        .facet-evaluation div {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 2px;
+        }
+        
+        .facet-description {
+            padding: 8px 15px 12px 15px;
+            color: #5a6c7d;
+            font-size: 14px;
+            line-height: 1.5;
+            display: none;
+            border-top: 1px solid #f1f3f4;
+            background-color: #fafbfc;
+            text-align: left;
+        }
+        
+        .facet-description.expanded {
+            display: table-cell; /* テーブルセル表示で幅を確保 */
+            width: 100%;
+        }
+        
+        /* 評価ラベル */
+        .evaluation-label {
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            display: inline-block;
+        }
+        
+        .very-high { background-color: #e74c3c; color: white; }
+        .high { background-color: #f39c12; color: white; }
+        .somewhat-high { background-color: #f1c40f; color: #2c3e50; }
+        .average { background-color: #95a5a6; color: white; }
+        .somewhat-low { background-color: #3498db; color: white; }
+        .low { background-color: #2980b9; color: white; }
+        .very-low { background-color: #8e44ad; color: white; }
+        
+        /* 注釈 */
+        .score-note {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ecf0f1;
+            display: none;
+        }
+        
+        .score-note.show {
+            display: block;
+        }
+        
+        /* アクションボタン */
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px 0;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-restart {
+            background-color: #95a5a6;
+            color: white;
+        }
+        
+        .btn-restart:hover {
+            background-color: #7f8c8d;
+        }
+        
+        /* PC表示時のボタンスタイル */
+        @media (min-width: 601px) {
+            .btn {
+                display: inline-block;
+                width: auto;
+                min-width: 140px;
+                margin: 0 10px;
+            }
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            /* スマホでの側面表示最適化 */
+            .facet-header {
+                padding: 10px 15px;
+            }
+            
+            .facet-info {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+            
+            .facet-name-score {
+                width: 40%;
+                justify-content: flex-start;
+                margin-bottom: 0;
+            }
+            
+            .expand-icon {
+                margin-right: 6px;
+                flex-shrink: 0;
+            }
+            
+            .facet-name {
+                font-size: 12px; /* スマホではさらに小さく */
+                flex: 1;
+            }
+            
+            .facet-score {
+                width: 20%;
+                font-size: 16px;
+                text-align: center;
+            }
+            
+            .facet-evaluation {
+                width: 40%;
+                text-align: center;
+            }
+            
+            .facet-evaluation .evaluation-label {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+            
+            .facet-evaluation div {
+                font-size: 12px;
+                margin-top: 2px;
+                color: #7f8c8d;
+            }
+            
+            .facet-description {
+                padding: 8px 15px 12px 15px;
+                font-size: 13px;
+                display: table-cell !important; /* 強制的にテーブルセル表示 */
+                width: 100% !important;
+            }
+            
+            .display-tabs {
+                margin-bottom: 20px;
+            }
+            
+            .tab-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            /* 領域ヘッダーもコンパクトに */
+            .domain-header {
+                padding: 12px 15px;
+            }
+            
+            .domain-title {
+                font-size: 16px;
+            }
+            
+            .domain-score {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .domain-score .score-value {
+                font-size: 16px;
+            }
+            
+            .domain-description {
+                font-size: 13px;
+            }
+            
+            /* スマホでのボタンスタイル */
+            .btn {
+                display: block;
+                margin: 5px auto;
+                width: 100%;
+                max-width: none;
+            }
+            
+            .facets-table thead th {
+                padding: 8px 6px;
+                font-size: 12px;
+            }
+        }
+        
+        /* デバッグエリア */
+        .debug-area {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .debug-title {
+            font-weight: bold;
+            color: #6c757d;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .debug-content {
+            font-family: monospace;
+            font-size: 12px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 3px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 表示切り替えタブ -->
+        <div class="display-tabs">
+            <button class="tab-button active" onclick="switchDisplayMode('tscore')" id="tscore-tab">偏差値</button>
+            <button class="tab-button" onclick="switchDisplayMode('raw')" id="raw-tab">得点</button>
+        </div>
+        
+        <!-- 詳細結果エリア -->
+        <div id="detailed-results">
+            <!-- JavaScript で動的に生成 -->
+        </div>
+        
+        <!-- 注釈 -->
+        <div class="score-note" id="score-note">
+            ※5領域は120点満点、側面は20点満点
+        </div>
+        
+        <!-- アクション -->
+        <div class="action-buttons">
+            <a href="results.html" class="btn">元のページに戻る</a>
+            <button class="btn" onclick="copyDetailedResults()">結果をコピー</button>
+        </div>
+        
+        <div class="action-buttons" style="margin-top: 20px;">
+            <button class="btn btn-restart" onclick="confirmReturnToStart()">テストをやり直す</button>
+        </div>
+        
+        <!-- デバッグエリア -->
+        <div class="debug-area">
+            <div class="debug-title">デバッグ情報</div>
+            <div class="debug-content" id="debug-content">詳細結果画面を読み込み中...</div>
+        </div>
+    </div>
+
+    <!-- 採点システム読み込み -->
+    <script src="scoring.js"></script>
+    
+    <script>
+        // グローバル変数
+        let scoringSystem = null;
+        let results = null;
+        let personalInfo = null;
+        let currentDisplayMode = 'tscore'; // 'tscore' or 'raw'
+
+        // 領域説明文データ
+        const domainDescriptions = {
+            'Neuroticism': 'ストレスや感情への敏感さ。高いと繊細で共感力に優れ危険察知が得意、低いと冷静沈着でプレッシャーに強い。',
+            'Extraversion': '社交性と活動エネルギー。高いと人との交流からエネルギーを得る、低いと一人時間で充電する。',
+            'Openness': '新しさや創造性への関心。高いと革新的で変化を歓迎、低いと伝統的で確実性を重視する。',
+            'Agreeableness': '他人への思いやりと協力姿勢。高いと人との調和を重視、低いと客観的で競争的、合理的判断ができる。',
+            'Conscientiousness': '計画性と責任遂行力。高いと目標達成型で信頼される、低いと柔軟性があり自由な発想を持つ。'
+        };
+
+        // 側面説明文データ
+        const facetDescriptions = {
+            'Anxiety': '心配や不安の感じやすさ。高いと慎重でリスク回避が上手、低いとリラックスして楽観的に行動できる。',
+            'Anger': '怒りや苛立ちの感じやすさ。高いと情熱的で不正に敏感、低いと穏やかで感情的にならない。',
+            'Depression': '気分の落ち込みやすさ。高いと感受性豊かで深く内省する、低いと前向きで困難にもめげない。',
+            'Self-Consciousness': '人前での緊張しやすさ。高いと謙虚で他人の気持ちに敏感、低いと自信を持って堂々と振る舞える。',
+            'Immoderation': '衝動的な行動の傾向。高いと自由で衝動的、瞬発力がある、低いと自制心があり計画的。',
+            'Vulnerability': '心理的な脆さの程度。高いと困難で動揺しやすいが素直に助けを求める、低いと逆境でも冷静に対処。',
+            
+            'Friendliness': '人との関わりを求める度合い。高いと温かく社交的で人脈が広い、低いと独立心旺盛で選択的交流。',
+            'Gregariousness': '大勢の集まりへの好み。高いとパーティーや集団活動を楽しむ、低いと少数との深い関係を重視。',
+            'Assertiveness': 'リーダーシップを取る傾向。高いと主導権を握り決断力がある、低いと協調的で支援に回るのが得意。',
+            'Activity Level': 'エネルギッシュな活動レベル。高いと多忙でも活力的、低いとマイペースでゆったり過ごすのを好む。',
+            'Excitement-Seeking': '刺激や冒険への欲求。高いとスリルを求め新体験を好む、低いと安定した環境を好み慎重。',
+            'Cheerfulness': '明るさと楽観性。高いと笑顔が多く周囲を明るくする、低いと落ち着いていて現実を冷静に見る。',
+            
+            'Imagination': '空想や創造的思考の豊かさ。高いと夢想家で創造力旺盛、低いと現実的で具体的思考が得意。',
+            'Artistic Interests': '芸術や美への関心。高いと美的センスがあり創作活動を好む、低いと実用性や機能性を重視。',
+            'Emotionality': '感情への敏感さ。高いと共感力があり感情表現が豊か、低いと客観的で論理的判断を重視する。',
+            'Adventurousness': '新体験への開放性。高いと変化や挑戦を歓迎する、低いと慣れた方法や環境での安定を好む。',
+            'Intellect': '抽象的思考や学習への関心。高いと哲学的思考で探究心旺盛、低いと実践的で具体性を重視。',
+            'Liberalism': '価値観の柔軟性。高いと多様性を受け入れ革新的、低いと伝統を尊重し保守的価値観を持つ。',
+            
+            'Trust': '他人を信頼する傾向。高いと人を信じやすく関係構築が得意、低いと慎重で騙されにくい。',
+            'Morality': '公正さと誠実さ。高いと正直で倫理的判断を重視、低いと実利的で戦略的思考ができる。',
+            'Altruism': '他人を助けたい気持ち。高いと親切で献身的、困っている人を放っておけない、低いと自立重視。',
+            'Cooperation': '対立を避ける傾向。高いと平和主義で妥協点を見つけるのが得意、低いと競争的で主張が強い。',
+            'Modesty': '自己評価の抑制度。高いと謙遜で他人を立てるのが上手、低いと自信があり自己アピールが得意。',
+            'Sympathy': '困っている人への共感。高いと弱者に同情し支援したい気持ちが強い、低いと客観的で個人責任を重視。',
+            
+            'Self-Efficacy': '自分の能力への信頼。高いと自信を持って困難に挑戦、低いと謙虚で慎重、他人の助けを求める。',
+            'Orderliness': '整理整頓と規則への関心。高いと環境を整え規則を重視、低いと自由で柔軟、創造性を発揮。',
+            'Dutifulness': '義務や約束を守る意識。高いと信頼できて規則を重視、低いと柔軟で状況に応じて行動できる。',
+            'Achievement-Striving': '目標達成への意欲。高いと野心的で向上心旺盛、低いとリラックスして現状に満足し競争を避ける。',
+            'Self-Discipline': '計画実行の意志力。高いと継続力があり誘惑に負けない、低いと自由で直感的、柔軟性がある。',
+            'Cautiousness': '決断前の熟考度合い。高いと準備万端で計画的、低いと直感的で行動力があり機会を逃さない。'
+        };
+
+        // デバッグログ
+        function debugLog(message) {
+            const debugContent = document.getElementById('debug-content');
+            const timestamp = new Date().toLocaleTimeString();
+            debugContent.textContent += `[${timestamp}] ${message}\n`;
+            debugContent.scrollTop = debugContent.scrollHeight;
+        }
+
+        // 初期化
+        async function initialize() {
+            debugLog('詳細結果画面を初期化中...');
+            
+            try {
+                // 個人情報を読み込み
+                loadPersonalInfo();
+                
+                // データファイルを読み込み
+                await loadData();
+                
+                // 回答データを読み込み
+                const answers = loadAnswers();
+                
+                // 採点実行
+                calculateResults(answers);
+                
+                // 結果表示
+                displayDetailedResults();
+                
+                debugLog('✅ 詳細結果初期化完了');
+                
+            } catch (error) {
+                debugLog(`❌ 初期化エラー: ${error.message}`);
+                alert('結果の計算に失敗しました。基本結果画面に戻ります。');
+                window.location.href = 'results.html';
+            }
+        }
+
+        // 個人情報読み込み
+        function loadPersonalInfo() {
+            try {
+                const stored = localStorage.getItem('ipip-neo-personal-info');
+                if (stored) {
+                    personalInfo = JSON.parse(stored);
+                    debugLog(`個人情報読み込み: ${personalInfo.gender}, ${personalInfo.age}歳, ${personalInfo.nationality}`);
+                } else {
+                    debugLog('個人情報が見つかりません');
+                    personalInfo = {
+                        gender: '男性',
+                        age: 32,
+                        nationality: '日本'
+                    };
+                }
+            } catch (error) {
+                debugLog(`個人情報読み込みエラー: ${error.message}`);
+                personalInfo = { gender: '不明', age: 0, nationality: '不明' };
+            }
+        }
+
+        // データファイル読み込み
+        async function loadData() {
+            debugLog('データファイルを読み込み中...');
+            
+            // questions.json
+            const questionsResponse = await fetch('./data/questions.json');
+            if (!questionsResponse.ok) {
+                throw new Error(`questions.json読み込みエラー: ${questionsResponse.status}`);
+            }
+            const questionsData = await questionsResponse.json();
+            
+            // norms.json
+            const normsResponse = await fetch('./data/norms.json');
+            if (!normsResponse.ok) {
+                throw new Error(`norms.json読み込みエラー: ${normsResponse.status}`);
+            }
+            const normsData = await normsResponse.json();
+            
+            // 採点システム初期化
+            scoringSystem = new IPIPNEOScoring(normsData, questionsData);
+            
+            debugLog('データファイル読み込み完了');
+        }
+
+        // 回答データ読み込み
+        function loadAnswers() {
+            try {
+                const stored = localStorage.getItem('ipip-neo-answers');
+                if (stored) {
+                    const answers = JSON.parse(stored);
+                    debugLog(`回答データ読み込み: ${answers.length}問`);
+                    
+                    const validAnswers = answers.filter(a => a >= 1 && a <= 5).length;
+                    if (validAnswers < 120) {
+                        throw new Error(`回答不完全: ${validAnswers}/120問`);
+                    }
+                    
+                    return answers;
+                } else {
+                    throw new Error('回答データが見つかりません');
+                }
+            } catch (error) {
+                debugLog(`回答読み込みエラー: ${error.message}`);
+                // テスト用ランダムデータ
+                debugLog('テスト用ランダムデータを生成');
+                return new Array(120).fill(0).map(() => Math.floor(Math.random() * 5) + 1);
+            }
+        }
+
+        // 採点実行
+        function calculateResults(answers) {
+            debugLog('採点を実行中...');
+            
+            try {
+                results = scoringSystem.calculateFullResults(answers);
+                debugLog('✅ 採点完了');
+                
+            } catch (error) {
+                debugLog(`❌ 採点エラー: ${error.message}`);
+                throw error;
+            }
+        }
+
+        // 詳細結果表示
+        function displayDetailedResults() {
+            debugLog('詳細結果を表示中...');
+            
+            // 詳細結果の生成
+            generateDetailedResults();
+            
+            debugLog('✅ 詳細結果表示完了');
+        }
+
+        // 個人情報表示
+        function displayPersonalInfo() {
+            const personalInfoElement = document.getElementById('personal-info');
+            personalInfoElement.textContent = `性別: ${personalInfo.gender} / 年齢: ${personalInfo.age}歳 / 国籍: ${personalInfo.nationality}`;
+        }
+
+        // 詳細結果生成
+        function generateDetailedResults() {
+            const container = document.getElementById('detailed-results');
+            container.innerHTML = '';
+            
+            // 領域の順序
+            const domainOrder = [
+                'Neuroticism',
+                'Extraversion', 
+                'Openness',
+                'Agreeableness',
+                'Conscientiousness'
+            ];
+            
+            domainOrder.forEach(domainKey => {
+                const domainSection = createDomainSection(domainKey);
+                container.appendChild(domainSection);
+            });
+        }
+
+        // 領域セクション作成
+        function createDomainSection(domainKey) {
+            const section = document.createElement('div');
+            section.className = 'domain-section';
+            
+            // 領域ヘッダー
+            const header = document.createElement('div');
+            header.className = 'domain-header';
+            
+            const title = document.createElement('h3');
+            title.className = 'domain-title';
+            title.textContent = scoringSystem.norms.domains[domainKey].japanese_name;
+            
+            const scoreDiv = document.createElement('div');
+            scoreDiv.className = 'domain-score';
+            updateDomainScore(scoreDiv, domainKey);
+            
+            const description = document.createElement('div');
+            description.className = 'domain-description';
+            description.textContent = domainDescriptions[domainKey] || '説明文が見つかりません。';
+            
+            header.appendChild(title);
+            header.appendChild(scoreDiv);
+            header.appendChild(description);
+            
+            // 側面テーブル
+            const facetsTable = document.createElement('table');
+            facetsTable.className = 'facets-table';
+            
+            // テーブルヘッダー
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            
+            const nameHeader = document.createElement('th');
+            nameHeader.textContent = '側面';
+            nameHeader.style.textAlign = 'left';
+            nameHeader.style.width = '40%';
+            
+            const scoreHeader = document.createElement('th');
+            scoreHeader.textContent = currentDisplayMode === 'tscore' ? '偏差値' : '得点';
+            scoreHeader.style.textAlign = 'center';
+            scoreHeader.style.width = '20%';
+            scoreHeader.id = `score-header-${domainKey}`;
+            
+            const evalHeader = document.createElement('th');
+            evalHeader.textContent = '評価';
+            evalHeader.style.textAlign = 'center';
+            evalHeader.style.width = '40%';
+            
+            headerRow.appendChild(nameHeader);
+            headerRow.appendChild(scoreHeader);
+            headerRow.appendChild(evalHeader);
+            thead.appendChild(headerRow);
+            facetsTable.appendChild(thead);
+            
+            // テーブルボディ
+            const tbody = document.createElement('tbody');
+            
+            const facets = scoringSystem.domainMapping[domainKey];
+            facets.forEach(facetKey => {
+                const facetRows = createFacetItem(facetKey);
+                tbody.appendChild(facetRows);
+            });
+            
+            facetsTable.appendChild(tbody);
+            
+            section.appendChild(header);
+            section.appendChild(facetsTable);
+            
+            return section;
+        }
+
+        // 側面アイテム作成（テーブル行として）
+        function createFacetItem(facetKey) {
+            // メイン行
+            const row = document.createElement('tr');
+            row.className = 'facet-item';
+            
+            // 名前セル（展開アイコン含む）
+            const nameCell = document.createElement('td');
+            nameCell.className = 'facet-header';
+            nameCell.onclick = () => toggleFacetDescription(row);
+            
+            const expandIcon = document.createElement('span');
+            expandIcon.className = 'expand-icon';
+            expandIcon.textContent = '▶';
+            
+            const name = document.createElement('span');
+            name.className = 'facet-name';
+            name.textContent = scoringSystem.norms.facets[facetKey].japanese_name;
+            
+            nameCell.appendChild(expandIcon);
+            nameCell.appendChild(name);
+            
+            // 得点セル
+            const scoreCell = document.createElement('td');
+            scoreCell.className = 'facet-score';
+            scoreCell.setAttribute('data-facet-key', facetKey);
+            updateFacetScore(scoreCell, facetKey);
+            
+            // 評価セル
+            const evalCell = document.createElement('td');
+            evalCell.className = 'facet-evaluation';
+            evalCell.setAttribute('data-facet-key', facetKey);
+            updateFacetEvaluation(evalCell, facetKey);
+            
+            row.appendChild(nameCell);
+            row.appendChild(scoreCell);
+            row.appendChild(evalCell);
+            
+            return row;
+        }
+
+        // 表示モード切り替え
+        function switchDisplayMode(mode) {
+            currentDisplayMode = mode;
+            
+            // タブの状態更新
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`${mode}-tab`).classList.add('active');
+            
+            // 注釈の表示制御
+            const scoreNote = document.getElementById('score-note');
+            if (mode === 'raw') {
+                scoreNote.classList.add('show');
+            } else {
+                scoreNote.classList.remove('show');
+            }
+            
+            // 全ての得点表示を更新
+            updateAllScores();
+            
+            debugLog(`表示モードを${mode}に切り替え`);
+        }
+
+        // 全得点表示更新
+        function updateAllScores() {
+            // 領域得点更新
+            document.querySelectorAll('.domain-score').forEach((element, index) => {
+                const domainKeys = ['Neuroticism', 'Extraversion', 'Openness', 'Agreeableness', 'Conscientiousness'];
+                updateDomainScore(element, domainKeys[index]);
+            });
+            
+            // テーブルヘッダー更新
+            document.querySelectorAll('[id^="score-header-"]').forEach(header => {
+                header.textContent = currentDisplayMode === 'tscore' ? '偏差値' : '得点';
+            });
+            
+            // 側面得点更新
+            document.querySelectorAll('.facet-score[data-facet-key]').forEach((element) => {
+                const facetKey = element.getAttribute('data-facet-key');
+                updateFacetScore(element, facetKey);
+            });
+            
+            document.querySelectorAll('.facet-evaluation[data-facet-key]').forEach((element) => {
+                const facetKey = element.getAttribute('data-facet-key');
+                updateFacetEvaluation(element, facetKey);
+            });
+        }
+
+        // 領域得点更新
+        function updateDomainScore(element, domainKey) {
+            const tScore = results.tScores.domains[domainKey];
+            const rawScore = results.rawScores.domains[domainKey];
+            const evaluation = results.evaluations.domains[domainKey];
+            const percentile = results.percentiles.domains[domainKey];
+            
+            let scoreText;
+            
+            if (currentDisplayMode === 'tscore') {
+                scoreText = tScore;
+            } else {
+                scoreText = rawScore;
+            }
+            
+            element.innerHTML = `
+                <span class="score-value">${scoreText}</span>
+                <div class="evaluation-container">
+                    <span class="evaluation-label ${getEvaluationClass(evaluation.label)}">${evaluation.label}</span>
+                    <div class="percentile">（${percentile.displayText}）</div>
+                </div>
+            `;
+        }
+
+        // 側面得点更新
+        function updateFacetScore(element, facetKey) {
+            element.setAttribute('data-facet-key', facetKey);
+            
+            const tScore = results.tScores.facets[facetKey];
+            const rawScore = results.rawScores.facets[facetKey];
+            
+            if (currentDisplayMode === 'tscore') {
+                element.textContent = tScore;
+            } else {
+                element.textContent = rawScore;
+            }
+        }
+
+        // 側面評価更新
+        function updateFacetEvaluation(element, facetKey) {
+            element.setAttribute('data-facet-key', facetKey);
+            
+            const evaluation = results.evaluations.facets[facetKey];
+            const percentile = results.percentiles.facets[facetKey];
+            
+            const evalLabel = document.createElement('span');
+            evalLabel.className = `evaluation-label ${getEvaluationClass(evaluation.label)}`;
+            evalLabel.textContent = evaluation.label;
+            
+            const percentileText = document.createElement('div');
+            percentileText.style.fontSize = '11px';
+            percentileText.style.marginTop = '2px';
+            percentileText.textContent = `（${percentile.displayText}）`;
+            
+            element.innerHTML = '';
+            element.appendChild(evalLabel);
+            element.appendChild(percentileText);
+        }
+
+        // 評価ラベルのCSSクラスを取得
+        function getEvaluationClass(label) {
+            const classMap = {
+                '非常に高い': 'very-high',
+                '高い': 'high',
+                'やや高い': 'somewhat-high',
+                '平均': 'average',
+                'やや低い': 'somewhat-low',
+                '低い': 'low',
+                '非常に低い': 'very-low'
+            };
+            return classMap[label] || 'average';
+        }
+
+        // 側面説明の展開/折りたたみ
+        function toggleFacetDescription(facetRow) {
+            const tbody = facetRow.parentElement;
+            const rowIndex = Array.from(tbody.children).indexOf(facetRow);
+            
+            // 説明行が既に存在するかチェック
+            let descRow = tbody.children[rowIndex + 1];
+            if (descRow && descRow.classList.contains('description-row')) {
+                // 既存の説明行を削除
+                tbody.removeChild(descRow);
+                facetRow.querySelector('.expand-icon').classList.remove('expanded');
+            } else {
+                // 新しい説明行を作成
+                descRow = document.createElement('tr');
+                descRow.className = 'description-row';
+                
+                const descCell = document.createElement('td');
+                descCell.colSpan = 3;
+                descCell.className = 'facet-description expanded';
+                
+                const facetKey = facetRow.querySelector('.facet-score').getAttribute('data-facet-key');
+                descCell.textContent = facetDescriptions[facetKey] || '説明文が見つかりません。';
+                
+                descRow.appendChild(descCell);
+                
+                // 説明行をメイン行の直後に挿入
+                tbody.insertBefore(descRow, tbody.children[rowIndex + 1]);
+                facetRow.querySelector('.expand-icon').classList.add('expanded');
+            }
+        }
+
+        // 詳細結果コピー
+        function copyDetailedResults() {
+            try {
+                const summary = generateDetailedSummary();
+                
+                navigator.clipboard.writeText(summary).then(() => {
+                    alert('詳細結果をクリップボードにコピーしました！');
+                    debugLog('詳細結果をクリップボードにコピー');
+                }).catch(() => {
+                    // フォールバック
+                    const textArea = document.createElement('textarea');
+                    textArea.value = summary;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('詳細結果をクリップボードにコピーしました！');
+                    debugLog('詳細結果をクリップボードにコピー（フォールバック）');
+                });
+            } catch (error) {
+                debugLog(`コピーエラー: ${error.message}`);
+                alert('コピーに失敗しました。');
+            }
+        }
+
+        // 詳細サマリー生成
+        function generateDetailedSummary() {
+            let summary = 'IPIP-NEO-120 詳細性格分析結果\n';
+            summary += '==================================\n\n';
+            
+            summary += `性別: ${personalInfo.gender} / 年齢: ${personalInfo.age}歳 / 国籍: ${personalInfo.nationality}\n\n`;
+            
+            // 各領域と側面の詳細
+            const domainOrder = ['Neuroticism', 'Extraversion', 'Openness', 'Agreeableness', 'Conscientiousness'];
+            
+            domainOrder.forEach(domainKey => {
+                const domainJP = scoringSystem.norms.domains[domainKey].japanese_name;
+                const domainTScore = results.tScores.domains[domainKey];
+                const domainEvaluation = results.evaluations.domains[domainKey];
+                const domainPercentile = results.percentiles.domains[domainKey];
+                
+                summary += `【${domainJP}】\n`;
+                summary += `■${domainJP}: ${domainTScore} (${domainEvaluation.label} - ${domainPercentile.displayText})\n\n`;
+                
+                // 側面詳細
+                const facets = scoringSystem.domainMapping[domainKey];
+                facets.forEach(facetKey => {
+                    const facetJP = scoringSystem.norms.facets[facetKey].japanese_name;
+                    const facetTScore = results.tScores.facets[facetKey];
+                    const facetEvaluation = results.evaluations.facets[facetKey];
+                    const facetPercentile = results.percentiles.facets[facetKey];
+                    
+                    summary += `・${facetJP}: ${facetTScore} (${facetEvaluation.label} - ${facetPercentile.displayText})\n`;
+                });
+                
+                summary += '\n';
+            });
+            
+            summary += '処理時刻: ' + new Date(results.timestamp).toLocaleString('ja-JP');
+            
+            return summary;
+        }
+
+        // 確認付きで最初に戻る
+        function confirmReturnToStart() {
+            const confirmed = confirm('本当に結果画面から移動してもよろしいですか？');
+            if (confirmed) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // ページ読み込み時に初期化
+        window.addEventListener('load', initialize);
+    </script>
+</body>
+</html>

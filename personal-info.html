@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPIP-NEO-120 性格テスト - 個人情報入力</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .completion-message {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .completion-emoji {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .completion-title {
+            font-size: 24px;
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .completion-text {
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-title {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #34495e;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 8px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input[type="radio"] {
+            margin-right: 8px;
+        }
+        
+        .submit-button {
+            width: 100%;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .submit-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .submit-button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        /* デバッグエリア */
+        .debug-area {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .debug-title {
+            font-weight: bold;
+            color: #6c757d;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .debug-content {
+            font-family: monospace;
+            font-size: 12px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 3px;
+            white-space: pre-wrap;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 完了メッセージ -->
+        <div class="completion-message">
+            <div class="completion-emoji">🎉</div>
+            <div class="completion-title">テスト完了！</div>
+            <div class="completion-text">120問の回答お疲れさまでした</div>
+        </div>
+        
+        <!-- フォーム -->
+        <div class="form-section">
+            <div class="form-title">結果を表示するために基本情報をご入力ください</div>
+            
+            <form id="personal-info-form">
+                <!-- 性別 -->
+                <div class="form-group">
+                    <label class="form-label">性別</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="male" name="gender" value="男性">
+                            <label for="male">男性</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="female" name="gender" value="女性">
+                            <label for="female">女性</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="other" name="gender" value="その他">
+                            <label for="other">その他</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="no-answer" name="gender" value="回答しない">
+                            <label for="no-answer">回答しない</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 年齢 -->
+                <div class="form-group">
+                    <label class="form-label" for="age">年齢</label>
+                    <input type="number" id="age" name="age" class="form-control" min="10" max="100" placeholder="例: 25">
+                </div>
+                
+                <!-- 国籍 -->
+                <div class="form-group">
+                    <label class="form-label" for="nationality">国籍</label>
+                    <input type="text" id="nationality" name="nationality" class="form-control" placeholder="例: 日本" value="日本">
+                </div>
+                
+                <button type="submit" class="submit-button" id="submit-button">結果を見る</button>
+            </form>
+        </div>
+        
+        <!-- デバッグエリア -->
+        <div class="debug-area">
+            <div class="debug-title">デバッグ情報</div>
+            <div class="debug-content" id="debug-content">個人情報入力画面を読み込みました...</div>
+        </div>
+    </div>
+
+    <script>
+        // グローバル変数
+        let answers = [];
+        let personalInfo = {};
+
+        // デバッグログ
+        function debugLog(message) {
+            const debugContent = document.getElementById('debug-content');
+            const timestamp = new Date().toLocaleTimeString();
+            debugContent.textContent += `[${timestamp}] ${message}\n`;
+            debugContent.scrollTop = debugContent.scrollHeight;
+        }
+
+        // 初期化
+        function initialize() {
+            debugLog('個人情報入力画面を初期化中...');
+            
+            // localStorageから回答データを取得
+            loadAnswersFromStorage();
+            
+            // フォーム送信イベント
+            const form = document.getElementById('personal-info-form');
+            form.addEventListener('submit', handleFormSubmit);
+            
+            debugLog('✅ 初期化完了');
+        }
+
+        // 回答データを読み込み
+        function loadAnswersFromStorage() {
+            try {
+                const storedAnswers = localStorage.getItem('ipip-neo-answers');
+                if (storedAnswers) {
+                    answers = JSON.parse(storedAnswers);
+                    debugLog(`✅ 回答データ読み込み: ${answers.length}問分`);
+                    
+                    // 120問すべて回答されているかチェック
+                    const answeredCount = answers.filter(answer => answer !== undefined && answer !== null).length;
+                    if (answeredCount < 120) {
+                        debugLog(`⚠️ 回答不完全: ${answeredCount}/120問`);
+                    }
+                } else {
+                    debugLog('❌ 回答データが見つかりません');
+                    // テスト用ダミーデータ
+                    answers = new Array(120).fill(0).map(() => Math.floor(Math.random() * 5) + 1);
+                    debugLog('🔧 テスト用ダミーデータを生成');
+                }
+            } catch (error) {
+                debugLog(`❌ データ読み込みエラー: ${error.message}`);
+                // エラー時もダミーデータ
+                answers = new Array(120).fill(0).map(() => Math.floor(Math.random() * 5) + 1);
+            }
+        }
+
+        // フォーム送信処理
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            debugLog('フォーム送信開始...');
+            
+            // フォームデータ取得
+            const formData = new FormData(event.target);
+            personalInfo = {
+                gender: formData.get('gender'),
+                age: parseInt(formData.get('age')),
+                nationality: formData.get('nationality')
+            };
+            
+            // 入力チェック
+            if (!personalInfo.gender) {
+                alert('性別を選択してください');
+                return;
+            }
+            
+            if (!personalInfo.age || personalInfo.age < 10 || personalInfo.age > 100) {
+                alert('年齢を正しく入力してください（10-100歳）');
+                return;
+            }
+            
+            if (!personalInfo.nationality || personalInfo.nationality.trim() === '') {
+                alert('国籍を入力してください');
+                return;
+            }
+            
+            debugLog(`個人情報: ${personalInfo.gender}, ${personalInfo.age}歳, ${personalInfo.nationality}`);
+            
+            // データを保存
+            savePersonalInfo();
+            
+            // 結果画面に遷移
+            goToResults();
+        }
+
+        // 個人情報をlocalStorageに保存
+        function savePersonalInfo() {
+            try {
+                localStorage.setItem('ipip-neo-personal-info', JSON.stringify(personalInfo));
+                debugLog('✅ 個人情報を保存');
+            } catch (error) {
+                debugLog(`❌ 保存エラー: ${error.message}`);
+            }
+        }
+
+        // 結果画面に遷移
+        function goToResults() {
+            debugLog('結果画面に遷移...');
+            
+            // 実際の結果画面（results.html）に遷移
+            window.location.href = 'results.html';
+        }
+
+        // ページ読み込み時に初期化
+        window.addEventListener('load', initialize);
+    </script>
+</body>
+</html>
