@@ -19,17 +19,18 @@
             margin: 0 auto;
             padding: 10px;
             background-color: white;
-            height: 100vh;
+            min-height: 100vh;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         
         .header-section {
             padding: 10px 0;
             border-bottom: 1px solid #ecf0f1;
             margin-bottom: 15px;
+            flex-shrink: 0;
         }
         
         .header-top {
@@ -46,11 +47,11 @@
         }
         
         .main-content {
-            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             padding: 0 5px;
+            flex-shrink: 0;
         }
         
         .progress-bar {
@@ -86,12 +87,13 @@
         }
         
         .question-container {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-align: center;
-            min-height: 80px;
+            min-height: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            flex-shrink: 0;
         }
         
         .question-english {
@@ -110,14 +112,15 @@
         }
         
         .answers-container {
-            margin-bottom: 20px;
+            margin-bottom: 0px;
             padding: 0 10px;
+            flex-shrink: 0;
         }
         
         .answer-option {
             display: block;
-            margin: 8px 0;
-            padding: 16px 20px;
+            margin: 6px 0;
+            padding: 14px 18px;
             border: 1px solid #ecf0f1;
             border-radius: 6px;
             cursor: pointer;
@@ -154,17 +157,20 @@
             margin-top: 3px;
         }
         
-        /* ナビゲーション - 新しいレイアウト */
+        /* ナビゲーション - 固定レイアウト */
         .navigation {
-            padding: 15px 0 10px 0;
+            padding: 20px 0 8px 0;
             border-top: 1px solid #ecf0f1;
+            margin-top: 20px;
+            flex-shrink: 0;
         }
         
         .nav-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
+            position: relative;
         }
         
         .nav-bottom {
@@ -173,25 +179,39 @@
         }
         
         .nav-button {
-            background-color: #95a5a6;
-            color: white;
-            border: none;
-            padding: 10px 20px;
+            background-color: #3498db !important;
+            color: white !important;
+            border: none !important;
+            padding: 12px 24px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             transition: background-color 0.2s ease;
+            min-width: 120px;
         }
         
         .nav-button:hover {
-            background-color: #7f8c8d;
+            background-color: #2980b9 !important;
         }
         
         .nav-button:disabled {
-            background-color: #bdc3c7;
+            background-color: #bdc3c7 !important;
             cursor: not-allowed;
         }
         
+        /* 前の問題ボタンは選択肢の左端に合わせて配置 */
+        .nav-button.prev {
+            position: absolute;
+            left: 10px;
+        }
+        
+        /* 次の問題ボタンは選択肢の右端に合わせて配置 */
+        .nav-button.next {
+            position: absolute;
+            right: 10px;
+        }
+        
+        /* 非表示時も位置を保持 */
         .nav-button.invisible {
             visibility: hidden;
         }
@@ -216,33 +236,100 @@
         @media (max-width: 600px) {
             .test-container {
                 padding: 8px;
-            }
-            
-            .question-english {
-                font-size: 20px;
-            }
-            
-            .question-container {
-                min-height: 70px;
-                margin-bottom: 12px;
-            }
-            
-            .answer-option {
-                padding: 14px 16px;
-                margin: 6px 0;
-            }
-            
-            .answer-text {
-                font-size: 16px;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
             }
             
             .header-section {
-                padding: 8px 0;
-                margin-bottom: 12px;
+                padding: 6px 0;
+                margin-bottom: 8px;
+                flex-shrink: 0;
+            }
+            
+            .main-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 5px;
+                flex-shrink: 0;
+            }
+            
+            .question-container {
+                min-height: 45px;
+                margin-bottom: 8px;
+                flex-shrink: 0;
+            }
+            
+            .question-english {
+                font-size: 18px;
+                line-height: 1.2;
+                margin-bottom: 0;
+            }
+            
+            .answers-container {
+                margin-bottom: 0px;
+                padding: 0 8px;
+                flex-shrink: 0;
+            }
+            
+            .answer-option {
+                padding: 10px 14px;
+                margin: 3px 0;
+            }
+            
+            .answer-text {
+                font-size: 15px;
+            }
+            
+            .navigation {
+                padding: 15px 0 6px 0;
+                margin-top: 15px;
+                flex-shrink: 0;
+                border-top: 1px solid #ecf0f1;
+            }
+            
+            .nav-top {
+                margin-bottom: 4px;
+                min-height: 44px;
+                position: relative;
+            }
+            
+            .nav-button {
+                background-color: #3498db !important;
+                color: white !important;
+                border: none !important;
+                padding: 10px 16px;
+                font-size: 14px;
+                min-width: 100px;
+                max-width: 120px;
+            }
+            
+            .nav-button:hover {
+                background-color: #2980b9 !important;
+            }
+            
+            .nav-button:disabled {
+                background-color: #bdc3c7 !important;
+            }
+            
+            /* スマホでも選択肢の幅に合わせて配置 */
+            .nav-button.prev {
+                position: absolute;
+                left: 8px;
+            }
+            
+            .nav-button.next {
+                position: absolute;
+                right: 8px;
+            }
+            
+            .nav-button.invisible {
+                visibility: hidden;
             }
             
             .progress-info {
-                font-size: 15px;
+                font-size: 14px;
             }
         }
         
@@ -299,8 +386,8 @@
         <!-- ナビゲーション -->
         <div class="navigation">
             <div class="nav-top">
-                <button class="nav-button" id="prev-button" onclick="previousQuestion()">前の問題</button>
-                <button class="nav-button invisible" id="next-button" onclick="nextQuestion()">次の問題</button>
+                <button class="nav-button prev" id="prev-button" onclick="previousQuestion()">前の問題</button>
+                <button class="nav-button next invisible" id="next-button" onclick="nextQuestion()">次の問題</button>
             </div>
             <div class="nav-bottom">
                 <button class="home-button" onclick="goHome()">ホームに戻る</button>
