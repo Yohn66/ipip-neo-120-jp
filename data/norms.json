@@ -1,28 +1,28 @@
 {
   "domains": {
     "Neuroticism": {
-      "mean": 66.60,
-      "sd": 6.52,
+      "mean": 66.63,
+      "sd": 9.18,
       "japanese_name": "神経症傾向"
     },
     "Extraversion": {
-      "mean": 82.14,
-      "sd": 5.78,
+      "mean": 82.11,
+      "sd": 8.49,
       "japanese_name": "外向性"
     },
     "Openness": {
-      "mean": 82.26,
-      "sd": 5.05,
+      "mean": 82.28,
+      "sd": 8.38,
       "japanese_name": "経験への開放性"
     },
     "Agreeableness": {
-      "mean": 89.22,
-      "sd": 4.93,
+      "mean": 89.25,
+      "sd": 7.77,
       "japanese_name": "協調性"
     },
     "Conscientiousness": {
-      "mean": 89.70,
-      "sd": 5.74,
+      "mean": 89.68,
+      "sd": 8.20,
       "japanese_name": "責任自律性"
     }
   },
@@ -214,6 +214,6 @@
     "population": "US adults",
     "age_range": "19-69 years",
     "mean_age": 28.1,
-    "note": "Domain means calculated as 6 × facet means, domain SDs estimated as facet SD × √6"
+    "note": "Domain means calculated as sum of 6 facet means, domain SDs calculated as √(Σsd²) for independent measures"
   }
 }

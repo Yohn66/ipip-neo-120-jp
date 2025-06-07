@@ -54,20 +54,6 @@
             text-align: center;
         }
         
-        .data-notice {
-            background-color: #f8f9fa;
-            border-left: 4px solid #3498db;
-            padding: 12px 16px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-        
-        .data-notice-text {
-            font-size: 14px;
-            color: #5a6c7d;
-            margin: 0;
-        }
-        
         .form-group {
             margin-bottom: 20px;
         }
@@ -114,7 +100,6 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
-            position: relative;
         }
         
         .submit-button:hover {
@@ -124,83 +109,6 @@
         .submit-button:disabled {
             background-color: #bdc3c7;
             cursor: not-allowed;
-        }
-        
-        /* ローディング表示 */
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-        
-        .loading-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-        }
-        
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .loading-text {
-            font-size: 16px;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        
-        .loading-subtext {
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-        
-        /* デバッグエリア */
-        .debug-area {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            border: 1px solid #dee2e6;
-        }
-        
-        .debug-title {
-            font-weight: bold;
-            color: #6c757d;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        .debug-content {
-            font-family: monospace;
-            font-size: 12px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 3px;
-            white-space: pre-wrap;
-            max-height: 150px;
-            overflow-y: auto;
         }
         
         /* レスポンシブ */
@@ -218,18 +126,14 @@
                 gap: 10px;
             }
         }
+        
+        /* デバッグエリアを非表示 */
+        .debug-area {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <!-- ローディングオーバーレイ -->
-    <div class="loading-overlay" id="loading-overlay">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <div class="loading-text" id="loading-text">結果を計算中...</div>
-            <div class="loading-subtext" id="loading-subtext">しばらくお待ちください</div>
-        </div>
-    </div>
-
     <div class="container">
         <!-- 完了メッセージ -->
         <div class="completion-message">
@@ -241,11 +145,6 @@
         <!-- フォーム -->
         <div class="form-section">
             <div class="form-title">結果を表示するために基本情報をご入力ください</div>
-            
-            <!-- データ利用に関する注意書き -->
-            <div class="data-notice">
-                <p class="data-notice-text">※ 匿名回答データを統計目的で使用します</p>
-            </div>
             
             <form id="personal-info-form">
                 <!-- 性別 -->
@@ -287,79 +186,39 @@
             </form>
         </div>
         
-        <!-- デバッグエリア -->
+        <!-- デバッグエリア（非表示） -->
         <div class="debug-area">
             <div class="debug-title">デバッグ情報</div>
             <div class="debug-content" id="debug-content">個人情報入力画面を読み込みました...</div>
         </div>
     </div>
 
-    <!-- 採点システム読み込み -->
-    <script src="scoring.js"></script>
-
     <script>
         // グローバル変数
         let answers = [];
         let personalInfo = {};
-        let results = null;
-        let scoringSystem = null;
 
-        // Google Forms設定
-        const GOOGLE_FORMS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSccj4oGnOjRDkCv6cZlnbsb3X78EOdjbLZpobEsO5uh_6ZbOQ/formResponse';
-        
-        // フィールドID（確認済み5項目 + 他189項目は順次追加）
-        const FORM_FIELDS = {
-            // 基本情報（確認済み）
-            gender: 'entry.1080777117',
-            age: 'entry.970877000',
-            nationality: 'entry.1629171835',
-            
-            // T得点（5領域）- 確認済み2項目
-            neuroticism_t: 'entry.271264077',
-            extraversion_t: 'entry.360087731',
-            openness_t: 'entry.XXXXX1', // 要確認
-            agreeableness_t: 'entry.XXXXX2', // 要確認
-            conscientiousness_t: 'entry.XXXXX3', // 要確認
-            
-            // 残り189項目は段階的に追加予定
-            // T得点（30側面）
-            // 質問回答（120問）
-            // 生得点（35項目）
-        };
-
-        // デバッグログ
+        // デバッグログ（機能は残すが非表示）
         function debugLog(message) {
             const debugContent = document.getElementById('debug-content');
-            const timestamp = new Date().toLocaleTimeString();
-            debugContent.textContent += `[${timestamp}] ${message}\n`;
-            debugContent.scrollTop = debugContent.scrollHeight;
-        }
-
-        // ローディング表示制御
-        function showLoading(text = '結果を計算中...', subtext = 'しばらくお待ちください') {
-            document.getElementById('loading-text').textContent = text;
-            document.getElementById('loading-subtext').textContent = subtext;
-            document.getElementById('loading-overlay').style.display = 'block';
-        }
-
-        function hideLoading() {
-            document.getElementById('loading-overlay').style.display = 'none';
+            if (debugContent) {
+                const timestamp = new Date().toLocaleTimeString();
+                debugContent.textContent += `[${timestamp}] ${message}\n`;
+                debugContent.scrollTop = debugContent.scrollHeight;
+            }
+            console.log(`[DEBUG] ${message}`);
         }
 
         // 初期化
         function initialize() {
             debugLog('個人情報入力画面を初期化中...');
             
-            // localStorageから回答データを取得
+            // 完了データから回答データを取得
             loadAnswersFromStorage();
             
             // フォーム送信イベント
             const form = document.getElementById('personal-info-form');
             form.addEventListener('submit', handleFormSubmit);
-            
-            // オンライン復旧時の自動再送信
-            window.addEventListener('online', retryPendingSubmissions);
-            window.addEventListener('focus', retryPendingSubmissions);
             
             debugLog('✅ 初期化完了');
         }
@@ -367,18 +226,18 @@
         // 回答データを読み込み
         function loadAnswersFromStorage() {
             try {
-                const storedAnswers = localStorage.getItem('ipip-neo-answers');
+                const storedAnswers = localStorage.getItem('ipip-neo-answers-completed');
                 if (storedAnswers) {
                     answers = JSON.parse(storedAnswers);
-                    debugLog(`✅ 回答データ読み込み: ${answers.length}問分`);
+                    debugLog(`✅ 完了回答データ読み込み: ${answers.length}問分`);
                     
                     // 120問すべて回答されているかチェック
-                    const answeredCount = answers.filter(answer => answer !== undefined && answer !== null).length;
+                    const answeredCount = answers.filter(answer => answer !== undefined && answer !== null && answer >= 1 && answer <= 5).length;
                     if (answeredCount < 120) {
                         debugLog(`⚠️ 回答不完全: ${answeredCount}/120問`);
                     }
                 } else {
-                    debugLog('❌ 回答データが見つかりません');
+                    debugLog('❌ 完了回答データが見つかりません');
                     // テスト用ダミーデータ
                     answers = new Array(120).fill(0).map(() => Math.floor(Math.random() * 5) + 1);
                     debugLog('🔧 テスト用ダミーデータを生成');
@@ -390,195 +249,8 @@
             }
         }
 
-        // データファイル読み込み
-        async function loadData() {
-            debugLog('データファイルを読み込み中...');
-
-            // questions.json
-            const questionsResponse = await fetch('./data/questions.json');
-            if (!questionsResponse.ok) {
-                throw new Error(`questions.json読み込みエラー: ${questionsResponse.status}`);
-            }
-            const questionsData = await questionsResponse.json();
-
-            // norms.json
-            const normsResponse = await fetch('./data/norms.json');
-            if (!normsResponse.ok) {
-                throw new Error(`norms.json読み込みエラー: ${normsResponse.status}`);
-            }
-            const normsData = await normsResponse.json();
-
-            // 採点システム初期化
-            scoringSystem = new IPIPNEOScoring(normsData, questionsData);
-
-            debugLog('✅ データファイル読み込み完了');
-        }
-
-        // 採点実行
-        function calculateResults() {
-            debugLog('採点を実行中...');
-            
-            try {
-                results = scoringSystem.calculateFullResults(answers);
-                debugLog('✅ 採点完了');
-                
-            } catch (error) {
-                debugLog(`❌ 採点エラー: ${error.message}`);
-                throw error;
-            }
-        }
-
-        // Google Formsに送信（リトライ機能付き）
-        async function submitToGoogleForms(retryCount = 0) {
-            const maxRetries = 3;
-            
-            try {
-                debugLog(`Google Forms送信試行 ${retryCount + 1}/${maxRetries + 1}`);
-                
-                const formData = new FormData();
-                
-                // 基本情報
-                formData.append(FORM_FIELDS.gender, personalInfo.gender);
-                formData.append(FORM_FIELDS.age, personalInfo.age.toString());
-                formData.append(FORM_FIELDS.nationality, personalInfo.nationality);
-                
-                // T得点（現在確認済みの5項目のみ送信）
-                formData.append(FORM_FIELDS.neuroticism_t, results.tScores.domains.Neuroticism.toString());
-                formData.append(FORM_FIELDS.extraversion_t, results.tScores.domains.Extraversion.toString());
-                
-                // 残りの項目は段階的に追加予定
-                // formData.append(FORM_FIELDS.openness_t, results.tScores.domains.Openness.toString());
-                // formData.append(FORM_FIELDS.agreeableness_t, results.tScores.domains.Agreeableness.toString());
-                // formData.append(FORM_FIELDS.conscientiousness_t, results.tScores.domains.Conscientiousness.toString());
-                
-                // 質問回答（120問）- 現在はフィールドID未確認のためコメントアウト
-                /*
-                answers.forEach((answer, index) => {
-                    const fieldKey = `q${index + 1}`;
-                    if (FORM_FIELDS[fieldKey]) {
-                        formData.append(FORM_FIELDS[fieldKey], answer.toString());
-                    }
-                });
-                */
-                
-                // 送信実行
-                const response = await fetch(GOOGLE_FORMS_URL, {
-                    method: 'POST',
-                    body: formData,
-                    mode: 'no-cors'
-                });
-                
-                debugLog('✅ Google Forms送信成功');
-                
-                // 成功時は保留中データを削除
-                clearPendingSubmission();
-                
-                return true;
-                
-            } catch (error) {
-                debugLog(`❌ 送信失敗 (試行${retryCount + 1}): ${error.message}`);
-                
-                if (retryCount < maxRetries) {
-                    // リトライ
-                    await sleep(1000 * (retryCount + 1)); // 1秒、2秒、3秒待機
-                    return await submitToGoogleForms(retryCount + 1);
-                } else {
-                    // 最大リトライ回数に達した場合
-                    debugLog('❌ 最大リトライ回数に達しました');
-                    
-                    // バックアップ保存
-                    saveToLocalBackup();
-                    
-                    return false;
-                }
-            }
-        }
-
-        // 段階的リトライ（即座→5秒後→10秒後）
-        async function submitWithAdvancedRetry() {
-            // 第1段階：即座に3回リトライ
-            for (let i = 0; i < 3; i++) {
-                if (await submitToGoogleForms(i)) return true;
-            }
-            
-            // 第2段階：5秒待って2回リトライ
-            debugLog('5秒後に再送信を試行します...');
-            await sleep(5000);
-            for (let i = 0; i < 2; i++) {
-                if (await submitToGoogleForms(i + 3)) return true;
-            }
-            
-            // 第3段階：10秒待って最後の1回
-            debugLog('10秒後に最終送信を試行します...');
-            await sleep(10000);
-            return await submitToGoogleForms(5);
-        }
-
-        // バックアップをlocalStorageに保存
-        function saveToLocalBackup() {
-            try {
-                const backupData = {
-                    personalInfo: personalInfo,
-                    answers: answers,
-                    results: results,
-                    timestamp: new Date().toISOString(),
-                    submitted: false
-                };
-                
-                localStorage.setItem('ipip-neo-backup-' + Date.now(), JSON.stringify(backupData));
-                debugLog('📦 バックアップデータを保存しました');
-                
-            } catch (error) {
-                debugLog(`❌ バックアップ保存エラー: ${error.message}`);
-            }
-        }
-
-        // 保留中の送信を再試行
-        async function retryPendingSubmissions() {
-            debugLog('保留中の送信を確認中...');
-            
-            const keys = Object.keys(localStorage);
-            const backupKeys = keys.filter(key => key.startsWith('ipip-neo-backup-'));
-            
-            for (const key of backupKeys) {
-                try {
-                    const backupData = JSON.parse(localStorage.getItem(key));
-                    if (!backupData.submitted) {
-                        debugLog('保留中データを発見、再送信を試行...');
-                        
-                        // グローバル変数を復元
-                        personalInfo = backupData.personalInfo;
-                        answers = backupData.answers;
-                        results = backupData.results;
-                        
-                        // 再送信
-                        if (await submitToGoogleForms()) {
-                            localStorage.removeItem(key);
-                            debugLog('✅ 保留中データの送信完了');
-                        }
-                    }
-                } catch (error) {
-                    debugLog(`❌ 保留中データ処理エラー: ${error.message}`);
-                }
-            }
-        }
-
-        // 送信成功時の保留データクリア
-        function clearPendingSubmission() {
-            const keys = Object.keys(localStorage);
-            const backupKeys = keys.filter(key => key.startsWith('ipip-neo-backup-'));
-            backupKeys.forEach(key => {
-                localStorage.removeItem(key);
-            });
-        }
-
-        // 待機関数
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
         // フォーム送信処理
-        async function handleFormSubmit(event) {
+        function handleFormSubmit(event) {
             event.preventDefault();
             
             debugLog('フォーム送信開始...');
@@ -609,38 +281,11 @@
             
             debugLog(`個人情報: ${personalInfo.gender}, ${personalInfo.age}歳, ${personalInfo.nationality}`);
             
-            // ローディング表示
-            showLoading('結果を計算中...', 'しばらくお待ちください');
+            // データを保存
+            savePersonalInfo();
             
-            try {
-                // データファイル読み込み
-                await loadData();
-                
-                // 採点実行
-                calculateResults();
-                
-                // 個人情報をlocalStorageに保存
-                savePersonalInfo();
-                
-                // Google Formsに送信（バックグラウンド）
-                showLoading('データを送信中...', '結果計算は完了しています');
-                
-                const submitSuccess = await submitWithAdvancedRetry();
-                
-                if (submitSuccess) {
-                    debugLog('✅ データ送信完了');
-                } else {
-                    debugLog('⚠️ データ送信は失敗しましたが、結果は表示されます');
-                }
-                
-            } catch (error) {
-                debugLog(`❌ 処理エラー: ${error.message}`);
-                alert('エラーが発生しましたが、結果は表示されます。');
-            } finally {
-                // 成功・失敗に関わらず結果画面に遷移
-                hideLoading();
-                goToResults();
-            }
+            // 結果画面に遷移
+            goToResults();
         }
 
         // 個人情報をlocalStorageに保存
@@ -656,6 +301,8 @@
         // 結果画面に遷移
         function goToResults() {
             debugLog('結果画面に遷移...');
+            
+            // 実際の結果画面（results.html）に遷移
             window.location.href = 'results.html';
         }
 
