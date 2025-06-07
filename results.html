@@ -79,7 +79,6 @@ border-bottom-color: #3498db;
 color: #2980b9;
 }
 
-/* セクションタイトルを中央揃えに */
 .section-title {
 font-size: 18px;
 font-weight: bold;
@@ -88,7 +87,6 @@ text-align: center;
 margin-bottom: 20px;
 }
 
-/* 領域行のスタイル強化 */
 .domain-row {
 cursor: pointer;
 transition: none;
@@ -111,7 +109,7 @@ background-color: #f8f9fa;
 .domain-name {
 font-weight: 500;
 color: #2c3e50;
-font-size: 14px; /* 領域名のフォントサイズを小さく */
+font-size: 14px;
 position: relative;
 }
 
@@ -139,11 +137,10 @@ text-align: left;
 }
 
 .domain-description.expanded {
-display: table-cell; /* テーブルセル表示で横幅いっぱい */
+display: table-cell;
 width: 100%;
 }
 
-/* 注釈 */
 .score-note {
 font-size: 12px;
 color: #7f8c8d;
@@ -181,7 +178,7 @@ border-bottom: 1px solid #dee2e6;
 .domain-name {
 font-weight: 500;
 color: #2c3e50;
-font-size: 14px; /* 領域名のフォントサイズを小さく */
+font-size: 14px;
 }
 
 .t-score {
@@ -242,15 +239,6 @@ box-sizing: border-box;
 background-color: #2980b9;
 }
 
-.btn-restart {
-background-color: #95a5a6;
-color: white;
-}
-
-.btn-restart:hover {
-background-color: #7f8c8d;
-}
-
 /* PC表示時のボタンスタイル */
 @media (min-width: 601px) {
 .btn {
@@ -259,33 +247,6 @@ background-color: #7f8c8d;
     min-width: 140px;
     margin: 0 10px;
 }
-}
-
-/* デバッグエリア */
-.debug-area {
-margin-top: 30px;
-padding: 15px;
-background-color: #f8f9fa;
-border-radius: 5px;
-border: 1px solid #dee2e6;
-}
-
-.debug-title {
-font-weight: bold;
-color: #6c757d;
-margin-bottom: 10px;
-font-size: 14px;
-}
-
-.debug-content {
-font-family: monospace;
-font-size: 12px;
-background-color: white;
-padding: 10px;
-border-radius: 3px;
-white-space: pre-wrap;
-max-height: 200px;
-overflow-y: auto;
 }
 
 /* レスポンシブ */
@@ -307,20 +268,14 @@ body {
     padding: 8px 6px;
 }
 
-.action-buttons {
-    flex-direction: column;
-}
-
-.btn {
-    display: block;
-    margin: 5px auto;
-    width: 100%;
-    max-width: none;
-}
-
 .domain-name {
-    font-size: 13px; /* スマホではさらに小さく */
+    font-size: 13px;
 }
+}
+
+/* デバッグエリアを非表示 */
+.debug-area {
+display: none;
 }
 </style>
 </head>
@@ -367,14 +322,10 @@ body {
 <!-- アクション -->
 <div class="action-buttons">
 <a href="detailed-results.html" class="btn">詳細を見る</a>
-<button class="btn" onclick="copyResults()">結果をコピー</button>
+<button class="btn btn-restart" onclick="confirmReturnToStart()">ホームに戻る</button>
 </div>
 
-<div class="action-buttons" style="margin-top: 20px;">
-<button class="btn btn-restart" onclick="confirmReturnToStart()">テストをやり直す</button>
-</div>
-
-<!-- デバッグエリア -->
+<!-- デバッグエリア（非表示） -->
 <div class="debug-area">
 <div class="debug-title">デバッグ情報</div>
 <div class="debug-content" id="debug-content">結果画面を読み込み中...</div>
@@ -400,12 +351,15 @@ const domainDescriptions = {
 'Conscientiousness': '計画性と責任遂行力。高いと目標達成型で信頼される、低いと柔軟性があり自由な発想を持つ。'
 };
 
-// デバッグログ
+// デバッグログ（機能は残すが非表示）
 function debugLog(message) {
 const debugContent = document.getElementById('debug-content');
-const timestamp = new Date().toLocaleTimeString();
-debugContent.textContent += `[${timestamp}] ${message}\n`;
-debugContent.scrollTop = debugContent.scrollHeight;
+if (debugContent) {
+    const timestamp = new Date().toLocaleTimeString();
+    debugContent.textContent += `[${timestamp}] ${message}\n`;
+    debugContent.scrollTop = debugContent.scrollHeight;
+}
+console.log(`[DEBUG] ${message}`);
 }
 
 // 初期化
@@ -433,7 +387,7 @@ try {
 } catch (error) {
     debugLog(`❌ 初期化エラー: ${error.message}`);
     alert('結果の計算に失敗しました。テストをやり直してください。');
-    // window.location.href = 'index.html';
+    window.location.href = 'index.html';
 }
 }
 
@@ -446,7 +400,6 @@ try {
         debugLog(`個人情報読み込み: ${personalInfo.gender}, ${personalInfo.age}歳, ${personalInfo.nationality}`);
     } else {
         debugLog('個人情報が見つかりません');
-        // テスト用ダミーデータ
         personalInfo = {
             gender: '男性',
             age: 32,
@@ -486,10 +439,11 @@ debugLog('データファイル読み込み完了');
 // 回答データ読み込み
 function loadAnswers() {
 try {
-    const stored = localStorage.getItem('ipip-neo-answers');
+    // 完了データから読み込み
+    const stored = localStorage.getItem('ipip-neo-answers-completed');
     if (stored) {
         const answers = JSON.parse(stored);
-        debugLog(`回答データ読み込み: ${answers.length}問`);
+        debugLog(`完了回答データ読み込み: ${answers.length}問`);
         
         // 120問完全かチェック
         const validAnswers = answers.filter(a => a >= 1 && a <= 5).length;
@@ -499,7 +453,7 @@ try {
         
         return answers;
     } else {
-        throw new Error('回答データが見つかりません');
+        throw new Error('完了した回答データが見つかりません');
     }
 } catch (error) {
     debugLog(`回答読み込みエラー: ${error.message}`);
@@ -519,111 +473,10 @@ try {
     debugLog(`領域T得点: ${Object.keys(results.tScores.domains).length}個`);
     debugLog(`側面T得点: ${Object.keys(results.tScores.facets).length}個`);
     
-    // 詳細デバッグ情報
-    debugDetailedScoring(answers);
-    
 } catch (error) {
     debugLog(`❌ 採点エラー: ${error.message}`);
     throw error;
 }
-}
-
-// 詳細採点デバッグ
-function debugDetailedScoring(answers) {
-debugLog('\n=== 📊 完全採点デバッグ分析 ===');
-
-// 1. 全30側面の詳細分析
-debugFacetAnalysis(answers);
-
-// 2. 領域合計の確認
-debugDomainAnalysis();
-
-// 3. T得点計算の確認
-debugTScoreAnalysis();
-}
-
-// 側面分析（全30側面）
-function debugFacetAnalysis(answers) {
-debugLog('\n🔍 全30側面の詳細分析:');
-
-const facetQuestions = {};
-
-// 各質問がどの側面に属するかマッピング
-scoringSystem.questions.forEach((q, i) => {
-    if (!facetQuestions[q.facet]) {
-        facetQuestions[q.facet] = [];
-    }
-    facetQuestions[q.facet].push({
-        questionNum: i + 1,
-        answer: answers[i],
-        keying: q.keying,
-        score: q.keying === 'positive' ? answers[i] : (6 - answers[i])
-    });
-});
-
-// 各側面の詳細表示
-Object.entries(facetQuestions).forEach(([facetName, questions]) => {
-    const actualScore = results.rawScores.facets[facetName];
-    const expectedScore = questions.reduce((sum, q) => sum + q.score, 0);
-    const match = actualScore === expectedScore ? '✅' : '❌';
-    
-    debugLog(`\n${match} ${facetName}: 実際${actualScore}点 / 期待${expectedScore}点`);
-    
-    if (actualScore !== expectedScore) {
-        debugLog(`  詳細:`);
-        questions.forEach(q => {
-            debugLog(`    Q${q.questionNum}: 回答${q.answer} (${q.keying}) → ${q.score}点`);
-        });
-    }
-    
-    // 質問数確認
-    if (questions.length !== 4) {
-        debugLog(`  ⚠️ 質問数異常: ${questions.length}問（期待4問）`);
-    }
-});
-}
-
-// 領域分析
-function debugDomainAnalysis() {
-debugLog('\n🔍 5領域の合計分析:');
-
-Object.entries(scoringSystem.domainMapping).forEach(([domainName, facetNames]) => {
-    const actualScore = results.rawScores.domains[domainName];
-    const expectedScore = facetNames.reduce((sum, facetName) => {
-        return sum + (results.rawScores.facets[facetName] || 0);
-    }, 0);
-    const match = actualScore === expectedScore ? '✅' : '❌';
-    const domainJP = scoringSystem.norms.domains[domainName].japanese_name;
-    
-    debugLog(`${match} ${domainJP}: 実際${actualScore}点 / 期待${expectedScore}点`);
-    
-    if (actualScore !== expectedScore) {
-        debugLog(`  側面内訳:`);
-        facetNames.forEach(facetName => {
-            const facetScore = results.rawScores.facets[facetName] || 0;
-            debugLog(`    ${facetName}: ${facetScore}点`);
-        });
-    }
-});
-}
-
-// T得点分析
-function debugTScoreAnalysis() {
-debugLog('\n🔍 T得点計算確認:');
-
-Object.entries(results.rawScores.domains).forEach(([domainName, rawScore]) => {
-    const norm = scoringSystem.norms.domains[domainName];
-    const actualTScore = results.tScores.domains[domainName];
-    const expectedTScore = Math.round((50 + (10 * (rawScore - norm.mean) / norm.sd)) * 10) / 10;
-    const match = Math.abs(actualTScore - expectedTScore) < 0.1 ? '✅' : '❌';
-    const domainJP = norm.japanese_name;
-    
-    debugLog(`${match} ${domainJP}:`);
-    debugLog(`  生得点: ${rawScore}点`);
-    debugLog(`  平均: ${norm.mean}, SD: ${norm.sd}`);
-    debugLog(`  計算: 50 + 10×(${rawScore}-${norm.mean})/${norm.sd} = ${expectedTScore}`);
-    debugLog(`  実際: ${actualTScore}, 期待: ${expectedTScore}`);
-});
 }
 
 // 結果表示
@@ -810,35 +663,9 @@ const classMap = {
 return classMap[label] || 'average';
 }
 
-// 結果コピー
-function copyResults() {
-try {
-    const summary = scoringSystem.generateSummary(results);
-    
-    // クリップボードにコピー
-    navigator.clipboard.writeText(summary).then(() => {
-        alert('結果をクリップボードにコピーしました！');
-        debugLog('結果をクリップボードにコピー');
-    }).catch(() => {
-        // フォールバック: テキストエリアを使用
-        const textArea = document.createElement('textarea');
-        textArea.value = summary;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        alert('結果をクリップボードにコピーしました！');
-        debugLog('結果をクリップボードにコピー（フォールバック）');
-    });
-} catch (error) {
-    debugLog(`コピーエラー: ${error.message}`);
-    alert('コピーに失敗しました。');
-}
-}
-
 // 確認付きで最初に戻る
 function confirmReturnToStart() {
-const confirmed = confirm('本当に結果画面から移動してもよろしいですか？');
+const confirmed = confirm('本当にホーム画面に戻りますか？');
 if (confirmed) {
     window.location.href = 'index.html';
 }

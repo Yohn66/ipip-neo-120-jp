@@ -18,12 +18,12 @@
         }
         h1 {
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .description {
-            font-size: 18px;
+            font-size: 16px;
             color: #34495e;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         .features {
             text-align: left;
@@ -31,10 +31,38 @@
             margin: 0 auto 30px;
         }
         .features li {
-            margin: 10px 0;
+            margin: 8px 0;
             color: #2c3e50;
         }
-        .start-button {
+        
+        /* スマートフォン用レイアウト調整 */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px 15px;
+            }
+            h1 {
+                margin-bottom: 10px;
+                font-size: 22px;
+            }
+            .description {
+                font-size: 15px;
+                margin-bottom: 20px;
+            }
+            .features {
+                margin-bottom: 25px;
+            }
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .main-button {
             background-color: #3498db;
             color: white;
             border: none;
@@ -42,9 +70,10 @@
             font-size: 18px;
             border-radius: 5px;
             cursor: pointer;
-            margin: 20px 10px;
+            width: 200px;
+            transition: background-color 0.2s ease;
         }
-        .start-button:hover {
+        .main-button:hover {
             background-color: #2980b9;
         }
         .test-info {
@@ -52,25 +81,10 @@
             font-size: 14px;
             margin-top: 20px;
         }
-        .debug-section {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #ecf0f1;
-            border-radius: 5px;
-            text-align: left;
-        }
-        .debug-title {
-            color: #e74c3c;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        #debug-output {
-            background-color: white;
-            padding: 10px;
-            border-radius: 3px;
-            font-family: monospace;
-            font-size: 12px;
-            white-space: pre-wrap;
+        
+        /* デバッグエリアを非表示 */
+        .debug-area {
+            display: none;
         }
     </style>
 </head>
@@ -78,183 +92,176 @@
     <div class="container">
         <h1>Big Five 性格分析</h1>
         <div class="description">
-            国際標準の120問テスト
+            32万人のデータを活用した国際基準の120問テスト
         </div>
         
         <div class="features">
-            <h3>あなたの性格を5つの領域で詳細分析</h3>
             <ul>
-                <li>32万人の研究データに基づく標準化された分析</li>
-                <li>あなたの特性が全体の何%に位置するかがわかる</li>
-                <li>30の側面で深く自分を理解</li>
+                <li>性格を5領域30側面で分析</li>
+                <li>各点数から偏差値を計算</li>
+                <li>あなたの特性の位置付けが全体の何％の位置にあるかわかる</li>
             </ul>
         </div>
 
-        <button class="start-button" onclick="startTest()">テスト開始</button>
-        <button class="start-button" onclick="testDataLoad()">データ読み込みテスト</button>
-        <button class="start-button" onclick="testOneQuestion()">1問表示テスト</button>
+        <div class="button-container" id="button-container">
+            <button class="main-button" onclick="startTest()">テスト開始</button>
+            <!-- 条件付きで表示されるボタン -->
+        </div>
         
         <div class="test-info">
             所要時間：約10-15分｜120問
         </div>
 
-        <!-- デバッグ用セクション -->
-        <div class="debug-section">
+        <!-- デバッグエリア（非表示） -->
+        <div class="debug-area">
             <div class="debug-title">開発用デバッグ情報</div>
             <div id="debug-output">ここにデバッグ情報が表示されます</div>
-        </div>
-
-        <!-- テスト用の質問表示エリア -->
-        <div id="question-area" style="display: none; margin-top: 30px; padding: 20px; border: 2px solid #3498db; border-radius: 10px;">
-            <div id="question-progress" style="color: #7f8c8d; margin-bottom: 10px;"></div>
-            <div id="question-text" style="font-size: 18px; font-weight: bold; margin-bottom: 15px;"></div>
-            <div id="question-japanese" style="font-size: 16px; color: #2c3e50; margin-bottom: 20px;"></div>
-            
-            <div id="answer-options">
-                <label style="display: block; margin: 10px 0; cursor: pointer;">
-                    <input type="radio" name="answer" value="1" style="margin-right: 10px;">
-                    全く当てはまらない / Very Inaccurate
-                </label>
-                <label style="display: block; margin: 10px 0; cursor: pointer;">
-                    <input type="radio" name="answer" value="2" style="margin-right: 10px;">
-                    あまり当てはまらない / Moderately Inaccurate
-                </label>
-                <label style="display: block; margin: 10px 0; cursor: pointer;">
-                    <input type="radio" name="answer" value="3" style="margin-right: 10px;">
-                    どちらでもない / Neither Accurate nor Inaccurate
-                </label>
-                <label style="display: block; margin: 10px 0; cursor: pointer;">
-                    <input type="radio" name="answer" value="4" style="margin-right: 10px;">
-                    やや当てはまる / Moderately Accurate
-                </label>
-                <label style="display: block; margin: 10px 0; cursor: pointer;">
-                    <input type="radio" name="answer" value="5" style="margin-right: 10px;">
-                    非常に当てはまる / Very Accurate
-                </label>
-            </div>
-            
-            <button class="start-button" onclick="submitAnswer()" style="margin-top: 20px;">回答する</button>
         </div>
     </div>
 
     <script>
-        // グローバル変数
-        let questionsData = null;
-        let normsData = null;
-        let currentQuestionIndex = 0;
-        let answers = [];
-
-        // デバッグ用関数
+        // デバッグ用関数（機能は残すが非表示）
         function debugLog(message) {
             const debugOutput = document.getElementById('debug-output');
-            const timestamp = new Date().toLocaleTimeString();
-            debugOutput.textContent += `[${timestamp}] ${message}\n`;
+            if (debugOutput) {
+                const timestamp = new Date().toLocaleTimeString();
+                debugOutput.textContent += `[${timestamp}] ${message}\n`;
+            }
+            console.log(`[DEBUG] ${message}`);
         }
 
         // 初期化時のメッセージ
         debugLog('ページが読み込まれました');
 
+        // ページ読み込み時にボタン表示を更新
+        window.addEventListener('load', updateButtonDisplay);
+
+        // ボタン表示更新
+        function updateButtonDisplay() {
+            debugLog('ボタン表示を更新中...');
+            
+            const container = document.getElementById('button-container');
+            
+            // データ存在チェック
+            const hasTemp = checkTempData();
+            const hasCompleted = checkCompletedData();
+            
+            debugLog(`データ状況: temp=${hasTemp}, completed=${hasCompleted}`);
+            
+            // 基本ボタン（常に表示）
+            let buttonsHtml = '<button class="main-button" onclick="startTest()">テスト開始</button>';
+            
+            // 条件付きボタン
+            if (hasTemp) {
+                buttonsHtml += '<button class="main-button" onclick="continueTest()">続きを回答</button>';
+            }
+            
+            if (hasCompleted) {
+                buttonsHtml += '<button class="main-button" onclick="showPreviousResults()">前回の結果</button>';
+            }
+            
+            container.innerHTML = buttonsHtml;
+            debugLog('✅ ボタン表示更新完了');
+        }
+
+        // 途中データの存在チェック
+        function checkTempData() {
+            try {
+                const tempData = localStorage.getItem('ipip-neo-answers-temp');
+                if (!tempData) return false;
+                
+                const answers = JSON.parse(tempData);
+                if (!Array.isArray(answers) || answers.length !== 120) return false;
+                
+                // 途中まで回答があるかチェック（未完了）
+                const answeredCount = answers.filter(a => a >= 1 && a <= 5).length;
+                return answeredCount > 0 && answeredCount < 120;
+                
+            } catch (error) {
+                debugLog(`途中データチェックエラー: ${error.message}`);
+                return false;
+            }
+        }
+
+        // 完了データの存在チェック
+        function checkCompletedData() {
+            try {
+                const completedData = localStorage.getItem('ipip-neo-answers-completed');
+                const personalInfo = localStorage.getItem('ipip-neo-personal-info');
+                
+                if (!completedData || !personalInfo) return false;
+                
+                const answers = JSON.parse(completedData);
+                if (!Array.isArray(answers) || answers.length !== 120) return false;
+                
+                // 120問すべて回答済みかチェック
+                const answeredCount = answers.filter(a => a >= 1 && a <= 5).length;
+                return answeredCount === 120;
+                
+            } catch (error) {
+                debugLog(`完了データチェックエラー: ${error.message}`);
+                return false;
+            }
+        }
+
         // テスト開始ボタン
         function startTest() {
             debugLog('テスト開始ボタンがクリックされました');
-            // 実際のテスト画面に遷移
-            window.location.href = 'test.html';
+            
+            // 新規テスト用の一時データを初期化（空の配列）
+            const newTempData = new Array(120);
+            localStorage.setItem('ipip-neo-answers-temp', JSON.stringify(newTempData));
+            
+            debugLog('新規テスト用データを初期化');
+            
+            // テスト画面に遷移
+            window.location.href = 'test.html?mode=new';
         }
 
-        // データ読み込みテスト
-        async function testDataLoad() {
-            debugLog('データ読み込みテストを開始...');
+        // 続きを回答ボタン
+        function continueTest() {
+            debugLog('続きを回答ボタンがクリックされました');
             
             try {
-                // questions.jsonを読み込み
-                const questionsResponse = await fetch('./data/questions.json');
-                if (!questionsResponse.ok) {
-                    throw new Error(`questions.json読み込みエラー: ${questionsResponse.status}`);
+                const tempData = localStorage.getItem('ipip-neo-answers-temp');
+                if (!tempData) {
+                    alert('保存された回答がありません');
+                    return;
                 }
-                questionsData = await questionsResponse.json();
-                debugLog(`✅ questions.json読み込み成功: ${questionsData.questions.length}問`);
-
-                // norms.jsonを読み込み
-                const normsResponse = await fetch('./data/norms.json');
-                if (!normsResponse.ok) {
-                    throw new Error(`norms.json読み込みエラー: ${normsResponse.status}`);
+                
+                const answers = JSON.parse(tempData);
+                
+                // 最初の未回答問題を見つける
+                let firstUnanswered = 0;
+                for (let i = 0; i < answers.length; i++) {
+                    if (!answers[i] || answers[i] < 1 || answers[i] > 5) {
+                        firstUnanswered = i;
+                        break;
+                    }
                 }
-                normsData = await normsResponse.json();
-                debugLog(`✅ norms.json読み込み成功: ${Object.keys(normsData.domains).length}領域, ${Object.keys(normsData.facets).length}側面`);
-
-                // サンプルデータ表示
-                debugLog(`サンプル質問: Q1 "${questionsData.questions[0].japanese}"`);
-                debugLog(`サンプル統計: 神経症傾向 平均=${normsData.domains.Neuroticism.mean}`);
+                
+                debugLog(`続きから開始: Q${firstUnanswered + 1}`);
+                
+                // テスト画面に遷移（続きモード）
+                window.location.href = `test.html?mode=continue&start=${firstUnanswered}`;
                 
             } catch (error) {
-                debugLog(`❌ エラー: ${error.message}`);
+                debugLog(`続きを回答エラー: ${error.message}`);
+                alert('データの読み込みに失敗しました');
             }
         }
 
-        // 1問表示テスト
-        async function testOneQuestion() {
-            debugLog('1問表示テストを開始...');
+        // 前回の結果ボタン
+        function showPreviousResults() {
+            debugLog('前回の結果ボタンがクリックされました');
             
-            // データが読み込まれていない場合は先に読み込み
-            if (!questionsData) {
-                await testDataLoad();
-            }
-            
-            if (!questionsData) {
-                debugLog('❌ データの読み込みに失敗しました');
-                return;
-            }
-
-            // 質問エリアを表示
-            const questionArea = document.getElementById('question-area');
-            questionArea.style.display = 'block';
-            
-            // 最初の質問を表示
-            showQuestion(0);
-            debugLog('✅ 1問目を表示しました');
-        }
-
-        // 質問を表示する関数
-        function showQuestion(index) {
-            const question = questionsData.questions[index];
-            
-            // 進捗表示
-            document.getElementById('question-progress').textContent = `Q${index + 1} / 120`;
-            
-            // 質問文表示
-            document.getElementById('question-text').textContent = question.english;
-            document.getElementById('question-japanese').textContent = question.japanese;
-            
-            // 現在の質問インデックスを保存
-            currentQuestionIndex = index;
-            
-            // 前の回答をクリア
-            document.querySelectorAll('input[name="answer"]').forEach(radio => {
-                radio.checked = false;
-            });
-        }
-
-        // 回答を処理する関数
-        function submitAnswer() {
-            // 選択された回答を取得
-            const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-            
-            if (!selectedAnswer) {
-                alert('回答を選択してください');
+            if (!checkCompletedData()) {
+                alert('完了した結果がありません');
                 return;
             }
             
-            const answerValue = parseInt(selectedAnswer.value);
-            const question = questionsData.questions[currentQuestionIndex];
-            
-            // 回答を保存
-            answers[currentQuestionIndex] = answerValue;
-            
-            debugLog(`Q${currentQuestionIndex + 1}の回答: ${answerValue} (${question.japanese})`);
-            debugLog(`回答内容: ${selectedAnswer.parentElement.textContent.trim()}`);
-            
-            // テスト用なので1問だけ
-            alert('回答が記録されました！1問表示テストは完了です。');
+            // 結果画面に遷移
+            window.location.href = 'results.html';
         }
     </script>
 </body>

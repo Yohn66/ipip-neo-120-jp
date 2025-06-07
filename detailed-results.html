@@ -231,10 +231,10 @@
             font-weight: 500;
             color: #2c3e50;
             flex: 1;
-            font-size: 14px; /* 基本画面と統一 */
-            white-space: nowrap; /* 改行を防ぐ */
+            font-size: 14px;
+            white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis; /* 長い場合は省略記号 */
+            text-overflow: ellipsis;
         }
         
         .facet-score {
@@ -274,7 +274,7 @@
         }
         
         .facet-description.expanded {
-            display: table-cell; /* テーブルセル表示で幅を確保 */
+            display: table-cell;
             width: 100%;
         }
         
@@ -377,7 +377,6 @@
                 padding: 20px;
             }
             
-            /* スマホでの側面表示最適化 */
             .facet-header {
                 padding: 10px 15px;
             }
@@ -400,7 +399,7 @@
             }
             
             .facet-name {
-                font-size: 12px; /* スマホではさらに小さく */
+                font-size: 12px;
                 flex: 1;
             }
             
@@ -429,7 +428,7 @@
             .facet-description {
                 padding: 8px 15px 12px 15px;
                 font-size: 13px;
-                display: table-cell !important; /* 強制的にテーブルセル表示 */
+                display: table-cell !important;
                 width: 100% !important;
             }
             
@@ -442,7 +441,6 @@
                 font-size: 14px;
             }
             
-            /* 領域ヘッダーもコンパクトに */
             .domain-header {
                 padding: 12px 15px;
             }
@@ -464,7 +462,6 @@
                 font-size: 13px;
             }
             
-            /* スマホでのボタンスタイル */
             .btn {
                 display: block;
                 margin: 5px auto;
@@ -478,31 +475,9 @@
             }
         }
         
-        /* デバッグエリア */
+        /* デバッグエリアを非表示 */
         .debug-area {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            border: 1px solid #dee2e6;
-        }
-        
-        .debug-title {
-            font-weight: bold;
-            color: #6c757d;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        .debug-content {
-            font-family: monospace;
-            font-size: 12px;
-            background-color: white;
-            padding: 10px;
-            border-radius: 3px;
-            white-space: pre-wrap;
-            max-height: 200px;
-            overflow-y: auto;
+            display: none;
         }
     </style>
 </head>
@@ -531,10 +506,10 @@
         </div>
         
         <div class="action-buttons" style="margin-top: 20px;">
-            <button class="btn btn-restart" onclick="confirmReturnToStart()">テストをやり直す</button>
+            <button class="btn btn-restart" onclick="confirmReturnToStart()">ホームに戻る</button>
         </div>
         
-        <!-- デバッグエリア -->
+        <!-- デバッグエリア（非表示） -->
         <div class="debug-area">
             <div class="debug-title">デバッグ情報</div>
             <div class="debug-content" id="debug-content">詳細結果画面を読み込み中...</div>
@@ -598,12 +573,15 @@
             'Cautiousness': '決断前の熟考度合い。高いと準備万端で計画的、低いと直感的で行動力があり機会を逃さない。'
         };
 
-        // デバッグログ
+        // デバッグログ（機能は残すが非表示）
         function debugLog(message) {
             const debugContent = document.getElementById('debug-content');
-            const timestamp = new Date().toLocaleTimeString();
-            debugContent.textContent += `[${timestamp}] ${message}\n`;
-            debugContent.scrollTop = debugContent.scrollHeight;
+            if (debugContent) {
+                const timestamp = new Date().toLocaleTimeString();
+                debugContent.textContent += `[${timestamp}] ${message}\n`;
+                debugContent.scrollTop = debugContent.scrollHeight;
+            }
+            console.log(`[DEBUG] ${message}`);
         }
 
         // 初期化
@@ -683,7 +661,7 @@
         // 回答データ読み込み
         function loadAnswers() {
             try {
-                const stored = localStorage.getItem('ipip-neo-answers');
+                const stored = localStorage.getItem('ipip-neo-answers-completed');
                 if (stored) {
                     const answers = JSON.parse(stored);
                     debugLog(`回答データ読み込み: ${answers.length}問`);
@@ -727,12 +705,6 @@
             generateDetailedResults();
             
             debugLog('✅ 詳細結果表示完了');
-        }
-
-        // 個人情報表示
-        function displayPersonalInfo() {
-            const personalInfoElement = document.getElementById('personal-info');
-            personalInfoElement.textContent = `性別: ${personalInfo.gender} / 年齢: ${personalInfo.age}歳 / 国籍: ${personalInfo.nationality}`;
         }
 
         // 詳細結果生成

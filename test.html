@@ -26,7 +26,6 @@
             overflow: hidden;
         }
         
-        /* ヘッダー部分をコンパクトに */
         .header-section {
             padding: 10px 0;
             border-bottom: 1px solid #ecf0f1;
@@ -54,7 +53,6 @@
             padding: 0 5px;
         }
         
-        /* プログレスバー */
         .progress-bar {
             width: 100%;
             height: 6px;
@@ -70,7 +68,6 @@
             width: 0%;
         }
         
-        /* 言語切り替えボタンをコンパクトに */
         .language-button {
             background: none;
             border: 1px solid #bdc3c7;
@@ -88,7 +85,6 @@
             border-color: #3498db;
         }
         
-        /* 質問エリア - 固定高さで位置安定化 */
         .question-container {
             margin-bottom: 15px;
             text-align: center;
@@ -113,7 +109,6 @@
             line-height: 1.4;
         }
         
-        /* 回答選択肢 - 改良版 */
         .answers-container {
             margin-bottom: 20px;
             padding: 0 10px;
@@ -159,13 +154,22 @@
             margin-top: 3px;
         }
         
-        /* ナビゲーションボタン */
+        /* ナビゲーション - 新しいレイアウト */
         .navigation {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 15px 0 10px 0;
             border-top: 1px solid #ecf0f1;
+        }
+        
+        .nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .nav-bottom {
+            display: flex;
+            justify-content: center;
         }
         
         .nav-button {
@@ -186,6 +190,26 @@
         .nav-button:disabled {
             background-color: #bdc3c7;
             cursor: not-allowed;
+        }
+        
+        .nav-button.invisible {
+            visibility: hidden;
+        }
+        
+        /* ホームボタンは少し幅広に */
+        .home-button {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .home-button:hover {
+            background-color: #7f8c8d;
         }
         
         /* レスポンシブ */
@@ -222,7 +246,6 @@
             }
         }
         
-        /* 超小画面対応 */
         @media (max-width: 380px) {
             .question-english {
                 font-size: 18px;
@@ -237,31 +260,9 @@
             }
         }
         
-        /* デバッグエリア（開発用・スマホでは小さく） */
+        /* デバッグエリアを非表示 */
         .debug-area {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            border: 1px solid #dee2e6;
-        }
-        
-        .debug-title {
-            font-weight: bold;
-            color: #6c757d;
-            margin-bottom: 5px;
-            font-size: 12px;
-        }
-        
-        .debug-content {
-            font-family: monospace;
-            font-size: 10px;
-            background-color: white;
-            padding: 8px;
-            border-radius: 3px;
-            white-space: pre-wrap;
-            max-height: 100px;
-            overflow-y: auto;
+            display: none;
         }
     </style>
 </head>
@@ -297,10 +298,16 @@
         
         <!-- ナビゲーション -->
         <div class="navigation">
-            <button class="nav-button" id="prev-button" onclick="previousQuestion()" disabled>前の質問</button>
+            <div class="nav-top">
+                <button class="nav-button" id="prev-button" onclick="previousQuestion()">前の問題</button>
+                <button class="nav-button invisible" id="next-button" onclick="nextQuestion()">次の問題</button>
+            </div>
+            <div class="nav-bottom">
+                <button class="home-button" onclick="goHome()">ホームに戻る</button>
+            </div>
         </div>
         
-        <!-- デバッグエリア（開発用） -->
+        <!-- デバッグエリア（非表示） -->
         <div class="debug-area">
             <div class="debug-title">デバッグ情報</div>
             <div class="debug-content" id="debug-content">テスト開始前...</div>
@@ -315,8 +322,9 @@
         let answers = [];
         let currentLanguage = 'jp';
         let autoAdvanceEnabled = true;
+        let testMode = 'new'; // 'new' または 'continue'
 
-        // 回答選択肢のテキスト（案3: 数字なし）
+        // 回答選択肢のテキスト
         const answerOptions = {
             jp: [
                 { value: 5, text: "非常に当てはまる", en: "Very Accurate" },
@@ -334,11 +342,14 @@
             ]
         };
 
-        // デバッグログ
+        // デバッグログ（機能は残すが非表示）
         function debugLog(message) {
             const debugContent = document.getElementById('debug-content');
-            const timestamp = new Date().toLocaleTimeString();
-            debugContent.textContent += `[${timestamp}] ${message}\n`;
+            if (debugContent) {
+                const timestamp = new Date().toLocaleTimeString();
+                debugContent.textContent += `[${timestamp}] ${message}\n`;
+            }
+            console.log(`[DEBUG] ${message}`);
         }
 
         // 初期化
@@ -346,17 +357,21 @@
             debugLog('テストを初期化中...');
             
             try {
-                // 回答配列を初期化（120問分）
-                answers = new Array(120);
+                // URLパラメータを取得
+                const urlParams = new URLSearchParams(window.location.search);
+                testMode = urlParams.get('mode') || 'new';
+                const startIndex = parseInt(urlParams.get('start')) || 0;
                 
-                // 既存の回答があれば復元
-                loadExistingAnswers();
+                debugLog(`テストモード: ${testMode}, 開始問題: ${startIndex + 1}`);
                 
                 // データを読み込み
                 await loadData();
                 
-                // 最初の質問を表示
-                showQuestion(0);
+                // 回答データを初期化/復元
+                initializeAnswers(testMode);
+                
+                // 指定された問題を表示
+                showQuestion(startIndex);
                 
                 debugLog('✅ テスト初期化完了');
                 
@@ -366,27 +381,35 @@
             }
         }
 
-        // 既存の回答を読み込み
-        function loadExistingAnswers() {
-            try {
-                const savedAnswers = localStorage.getItem('ipip-neo-answers');
-                if (savedAnswers) {
-                    const parsed = JSON.parse(savedAnswers);
-                    if (Array.isArray(parsed) && parsed.length === 120) {
-                        answers = parsed;
-                        debugLog('既存の回答データを復元');
+        // 回答データ初期化/復元
+        function initializeAnswers(mode) {
+            if (mode === 'new') {
+                // 新規テスト：空の配列を作成
+                answers = new Array(120);
+                debugLog('新規テスト用に空の回答配列を初期化');
+            } else if (mode === 'continue') {
+                // 続きテスト：一時データから復元
+                try {
+                    const tempData = localStorage.getItem('ipip-neo-answers-temp');
+                    if (tempData) {
+                        answers = JSON.parse(tempData);
+                        debugLog('続きテスト用に一時データから復元');
+                    } else {
+                        answers = new Array(120);
+                        debugLog('一時データなし、空の配列で初期化');
                     }
+                } catch (error) {
+                    debugLog(`復元エラー: ${error.message}`);
+                    answers = new Array(120);
                 }
-            } catch (error) {
-                debugLog(`回答復元エラー: ${error.message}`);
             }
         }
 
-        // 回答をlocalStorageに保存
+        // 回答をlocalStorageに保存（一時データとして）
         function saveAnswers() {
             try {
-                localStorage.setItem('ipip-neo-answers', JSON.stringify(answers));
-                debugLog('回答データを保存');
+                localStorage.setItem('ipip-neo-answers-temp', JSON.stringify(answers));
+                debugLog('一時回答データを保存');
             } catch (error) {
                 debugLog(`保存エラー: ${error.message}`);
             }
@@ -438,7 +461,6 @@
             
             const progress = ((currentQuestionIndex + 1) / 120) * 100;
             
-            // 残り問題数表示（最後20問）
             if (currentQuestionIndex >= 100) {
                 const remaining = 120 - currentQuestionIndex;
                 progressText.textContent = `あと${remaining}問`;
@@ -487,7 +509,6 @@
                 label.appendChild(textDiv);
                 container.appendChild(label);
                 
-                // クリックで選択（即座に反応）
                 label.addEventListener('click', (e) => {
                     e.preventDefault();
                     radio.checked = true;
@@ -495,7 +516,7 @@
                 });
             });
             
-            // 既存の回答があれば復元
+            // 既存の回答があれば復元（ハイライト表示）
             if (answers[currentQuestionIndex]) {
                 const radio = container.querySelector(`input[value="${answers[currentQuestionIndex]}"]`);
                 if (radio) {
@@ -525,26 +546,49 @@
             
             debugLog(`Q${currentQuestionIndex + 1}回答: ${answerValue}`);
             
-            // 自動進行（ラグを最小限に）
+            // 自動進行（ナビゲーション更新を後にして「次の問題」ボタンのちらつきを防ぐ）
             if (autoAdvanceEnabled && currentQuestionIndex < 119) {
                 setTimeout(() => {
                     nextQuestion();
-                }, 150); // 0.15秒後に自動進行
+                }, 150);
             } else if (currentQuestionIndex === 119) {
                 // 最後の問題
                 setTimeout(() => {
                     completeTest();
                 }, 150);
+            } else {
+                // 自動進行しない場合のみナビゲーション更新
+                updateNavigation();
             }
-            
-            updateNavigation();
         }
 
         // ナビゲーション更新
         function updateNavigation() {
             const prevButton = document.getElementById('prev-button');
+            const nextButton = document.getElementById('next-button');
             
-            prevButton.disabled = currentQuestionIndex === 0;
+            // 前の問題ボタン：2問目以降で表示
+            if (currentQuestionIndex === 0) {
+                prevButton.style.visibility = 'hidden';
+            } else {
+                prevButton.style.visibility = 'visible';
+                prevButton.disabled = false;
+            }
+            
+            // 次の問題ボタン：既回答済みで、かつ最後の問題でない場合のみ表示
+            const currentAnswer = answers[currentQuestionIndex];
+            const hasAnswer = currentAnswer !== undefined && currentAnswer !== null && currentAnswer >= 1 && currentAnswer <= 5;
+            const isNotLastQuestion = currentQuestionIndex < 119;
+            
+            debugLog(`ナビ更新: Q${currentQuestionIndex + 1}, 回答=${currentAnswer}, hasAnswer=${hasAnswer}, isNotLast=${isNotLastQuestion}`);
+            
+            if (hasAnswer && isNotLastQuestion) {
+                nextButton.classList.remove('invisible');
+                nextButton.disabled = false;
+            } else {
+                nextButton.classList.add('invisible');
+                nextButton.disabled = true;
+            }
         }
 
         // 前の質問
@@ -556,8 +600,25 @@
 
         // 次の質問
         function nextQuestion() {
-            if (currentQuestionIndex < 119 && answers[currentQuestionIndex]) {
+            // 現在の問題に回答があることを確認
+            const hasCurrentAnswer = answers[currentQuestionIndex] && answers[currentQuestionIndex] >= 1 && answers[currentQuestionIndex] <= 5;
+            
+            if (!hasCurrentAnswer) {
+                // 万が一回答がない場合（通常は起こらない）
+                alert('この問題に回答してください');
+                return;
+            }
+            
+            if (currentQuestionIndex < 119) {
                 showQuestion(currentQuestionIndex + 1);
+            }
+        }
+
+        // ホームに戻る
+        function goHome() {
+            const confirmed = confirm('本当にホーム画面に戻りますか？');
+            if (confirmed) {
+                window.location.href = 'index.html';
             }
         }
 
@@ -586,7 +647,7 @@
             debugLog('テスト完了！');
             
             // 回答の完全性をチェック
-            const answeredCount = answers.filter(answer => answer !== undefined && answer !== null).length;
+            const answeredCount = answers.filter(answer => answer !== undefined && answer !== null && answer >= 1 && answer <= 5).length;
             debugLog(`回答完了数: ${answeredCount}/120`);
             
             if (answeredCount < 120) {
@@ -594,9 +655,15 @@
                 return;
             }
             
-            // 最終保存
-            saveAnswers();
-            debugLog('最終回答データを保存完了');
+            // 完了データとして保存
+            try {
+                localStorage.setItem('ipip-neo-answers-completed', JSON.stringify(answers));
+                // 一時データは削除
+                localStorage.removeItem('ipip-neo-answers-temp');
+                debugLog('完了データを保存、一時データを削除');
+            } catch (error) {
+                debugLog(`保存エラー: ${error.message}`);
+            }
             
             // 個人情報入力画面に遷移
             alert('お疲れさまでした！テストが完了しました。\n次は個人情報を入力してください。');
